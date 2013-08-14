@@ -44,8 +44,6 @@ import vtk.vtkRenderer;
  * @author hfq config vtk window
  */
 public class Window {
-    // private vtkInteractorStyle style;
-
     public LinkedHashMap<String, PointCloud<PointXYZ>> linkedHashMapCloud;
 
     private vtkPanel panel;
@@ -215,13 +213,6 @@ public class Window {
             e.printStackTrace();
         }
     }
-
-//    /**
-//     * @return the interactor style
-//     */
-//    public vtkInteractorStyle getStyle() {
-//        return style;
-//    }
 
     /**
      * @return the renWin

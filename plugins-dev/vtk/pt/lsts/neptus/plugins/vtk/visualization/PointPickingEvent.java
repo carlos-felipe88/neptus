@@ -41,13 +41,17 @@ import vtk.vtkRenderWindowInteractor;
 import vtk.vtkRenderer;
 
 /**
- * @author hfq
+ * @author hfq * FIXME - Have to improve, and add interation to visualizer check weather there are really 2 points
+ *         choosen add to visualizer coords of choosen points add to visualizer calculated distance between 2 points
+ * 
+ *         this interation can be used to do area profiling, by choosing 2 points and showing a chart that shows
+ *         bathymetry along the the straight line defined by the 2 points.
  * 
  */
 public class PointPickingEvent extends vtkCommand {
-    private int idx, idx2;
+    private int idx1, idx2;
 
-    private float x, y, z;
+    private float x1, y1, z1;
     private float x2, y2, z2;
 
     private boolean pickFirst = false;
@@ -62,6 +66,9 @@ public class PointPickingEvent extends vtkCommand {
 
     }
 
+    /**
+     * @param interactor
+     */
     public void performSinglePick(vtkRenderWindowInteractor interactor) {
         int mouseX, mouseY;
         vtkPointPicker picker = new vtkPointPicker();
@@ -76,13 +83,13 @@ public class PointPickingEvent extends vtkCommand {
         picker.Pick(mouseX, mouseY, 0.0, ren);
 
         if (!pickFirst) {
-            idx = picker.GetPointId();
+            idx1 = picker.GetPointId();
             if (picker.GetDataSet() != null) {
                 double[] p = new double[3];
-                picker.GetDataSet().GetPoint(idx, p);
-                x = (float) p[0];
-                y = (float) p[1];
-                z = (float) p[2];
+                picker.GetDataSet().GetPoint(idx1, p);
+                x1 = (float) p[0];
+                y1 = (float) p[1];
+                z1 = (float) p[2];
             }
             pickFirst = true;
         }
@@ -99,12 +106,16 @@ public class PointPickingEvent extends vtkCommand {
         }
     }
 
+    /**
+     * @param e
+     * @param eventId
+     */
     public void execute(MouseEvent e, int eventId) {
         // NeptusLog.pub().info("expectacular");
         performSinglePick(canvas.getRenderWindowInteractor());
-        NeptusLog.pub().info("1 - Point id: " + idx);
+        NeptusLog.pub().info("1 - Point id: " + idx1);
         NeptusLog.pub().info(
-                "1 Point picked - x: " + getPoint().getX() + " y: " + getPoint().getY() + " z: " + getPoint().getZ());
+                "1 Point picked - x: " + getPoint1().getX() + " y: " + getPoint1().getY() + " z: " + getPoint1().getZ());
 
         if (getPoint2() != null) {
             NeptusLog.pub().info("2 Point id: " + idx2);
@@ -115,15 +126,23 @@ public class PointPickingEvent extends vtkCommand {
 
     }
 
-    public PointXYZ getPoint() {
+    /**
+     * get first choosen point
+     * @return
+     */
+    public PointXYZ getPoint1() {
         PointXYZ p = new PointXYZ();
-        p.setX(x);
-        p.setY(y);
-        p.setZ(z);
+        p.setX(x1);
+        p.setY(y1);
+        p.setZ(z1);
 
         return (p);
     }
 
+    /**
+     * get second choosen point
+     * @return
+     */
     public PointXYZ getPoint2() {
         PointXYZ p = new PointXYZ();
         p.setX(x2);
@@ -133,8 +152,20 @@ public class PointPickingEvent extends vtkCommand {
         return (p);
     }
 
-    public int getPointIndex() {
-        return (idx);
+    /**
+     * get first points choosen index
+     * @return idx1
+     */
+    public int getPointIndex1() {
+        return (idx1);
+    }
+    
+    /**
+     * get secont point choosen index
+     * @return idx2
+     */
+    public int getPointIndex2() {
+        return (idx2);
     }
 
 }
