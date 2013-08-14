@@ -349,7 +349,7 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
     }
 
     /* (non-Javadoc)
-     * @see pt.lsts.neptus.gui.PropertiesProvider#getProperties()
+     * @see pt.up.fe.dceg.neptus.gui.PropertiesProvider#getProperties()
      */
     @Override
     public DefaultProperty[] getProperties() {
@@ -357,7 +357,7 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
     }
 
     /* (non-Javadoc)
-     * @see pt.lsts.neptus.gui.PropertiesProvider#setProperties(com.l2fprod.common.propertysheet.Property[])
+     * @see pt.up.fe.dceg.neptus.gui.PropertiesProvider#setProperties(com.l2fprod.common.propertysheet.Property[])
      */
     @Override
     public void setProperties(Property[] properties) {
@@ -370,7 +370,7 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
     }
 
     /* (non-Javadoc)
-     * @see pt.lsts.neptus.gui.PropertiesProvider#getPropertiesErrors(com.l2fprod.common.propertysheet.Property[])
+     * @see pt.up.fe.dceg.neptus.gui.PropertiesProvider#getPropertiesErrors(com.l2fprod.common.propertysheet.Property[])
      */
     @Override
     public String[] getPropertiesErrors(Property[] properties) {
