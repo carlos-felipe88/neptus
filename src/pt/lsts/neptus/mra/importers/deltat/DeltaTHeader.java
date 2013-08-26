@@ -109,7 +109,7 @@ public class DeltaTHeader {
         b.position(112);
         b.get(millisBuf, 0, 5);
           
-        timestampStr = new String(timestampBuf);
+        timestampStr = new String(timestampBuf);      
         millisStr = new String(millisBuf);
         
         m = pTimeStamp.matcher(timestampStr);

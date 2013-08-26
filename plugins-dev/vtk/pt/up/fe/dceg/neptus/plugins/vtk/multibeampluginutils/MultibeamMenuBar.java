@@ -31,6 +31,10 @@
  */
 package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
@@ -45,6 +49,9 @@ public class MultibeamMenuBar {
     private Vtk vtkMultibeamInit;
     
     private JMenuBar menuBar;
+    private JMenu file, edit, view, tools, help;
+    
+    private AbstractAction saveFile, saveFileAs;
     
     public MultibeamMenuBar(Vtk vtkMultibeamInit) {
         this.vtkMultibeamInit = vtkMultibeamInit;
@@ -53,35 +60,66 @@ public class MultibeamMenuBar {
     public JMenuBar createMultibeamMenuBar() {
         setMenuBar(new JMenuBar());
 
-        JMenu file = new JMenu(I18n.text("File"));
-        addMenuItemsToFile(file);
+        file = new JMenu(I18n.text("File"));
+        addMenuItemsToFileMenu();
+        edit = new JMenu(I18n.text("Edit"));
+        addMenuItemsToEditMenu();
+        view = new JMenu(I18n.text("View"));
+        addMenuItemsToViewMenu();
+        tools = new JMenu(I18n.text("Tools"));
+        addMenuItemsToToolsMenu();
+        help = new JMenu(I18n.text("Help"));
+        addMenuItemsToHelpMenu();
+
         
-        JMenu edit = new JMenu(I18n.text("Edit"));
-        JMenu view = new JMenu(I18n.text("View"));
-        JMenu help = new JMenu(I18n.text("Help"));
-        JMenu tools = new JMenu(I18n.text("Tools"));       
-        
+        getMenuBar().setBackground(Color.GRAY);
         getMenuBar().add(file);
         getMenuBar().add(edit);
         getMenuBar().add(view);
-        getMenuBar().add(help);
         getMenuBar().add(tools);
+        
+        getMenuBar().add(help);
         
         return getMenuBar();
     }
 
-
-    /**
-     * @param file
-     */
-    private void addMenuItemsToFile(JMenu file) {
+    private void addMenuItemsToFileMenu() {
+        saveFile = new AbstractAction(I18n.text("Save File")) {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        };  
         
+        saveFileAs = new AbstractAction(I18n.text("Save File as...")) {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        };
+        
+        file.add(saveFile);
+        file.add(saveFileAs);
+    }
+    
+    private void addMenuItemsToEditMenu() {
+        
+    }
+    
+    private void addMenuItemsToViewMenu() {
+        
+    }
+    
+    private void addMenuItemsToToolsMenu() {
+        
+    }
+    
+    private void addMenuItemsToHelpMenu() {
         
     }
 
-    /**
-     * @return the menuBar
-     */
     public JMenuBar getMenuBar() {
         return menuBar;
     }

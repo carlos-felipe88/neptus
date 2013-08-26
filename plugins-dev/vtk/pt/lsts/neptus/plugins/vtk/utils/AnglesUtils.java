@@ -37,11 +37,6 @@ package pt.lsts.neptus.plugins.vtk.utils;
  */
 public class AnglesUtils {
 
-    public static float normAngle(float alpha) {
-        float ein = 0.0f;
-        return ein;
-    }
-
     public static float rad2deg(float alpha) {
         return (alpha * 52.29578f);
     }
@@ -57,4 +52,11 @@ public class AnglesUtils {
     public static double deg2rad(double alpha) {
         return (alpha * 0.017453293);
     }
+    
+
+    public static float normAngle(float alpha) {
+        //return (alpha >= 0 ? alpha + Math.)
+        return 0;
+    }
+
 }
