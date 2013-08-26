@@ -40,84 +40,114 @@ import javax.swing.JMenuBar;
 
 import pt.up.fe.dceg.neptus.i18n.I18n;
 import pt.up.fe.dceg.neptus.plugins.vtk.Vtk;
+import pt.up.fe.dceg.neptus.util.ImageUtils;
 
 /**
  * @author hfq
- *
+ * 
  */
 public class MultibeamMenuBar {
     private Vtk vtkMultibeamInit;
-    
+
     private JMenuBar menuBar;
-    private JMenu file, edit, view, tools, help;
-    
+    private JMenu fileMenu, editMenu, viewMenu, toolsMenu, helpMenu;
+
+    // fileMenu
     private AbstractAction saveFile, saveFileAs;
-    
+    // EditMenu
+    private AbstractAction configDepthColorBounds, zValueExaggeration, downsampleLeafSize;
+    // ViewMenu
+    private AbstractAction resetViewportCamera, incrementPointSize, decrementPointSize, colorGradX, colorGradY,
+            colorGradZ, viewPointCloud, viewMesh, pointBasedRep, wireframeRep, surfaceRep, displayLookUpTable,
+            displayScaleGrid, displayInfoPointcloud;
+    // ToolsMenu
+    private AbstractAction exaggerateZ, performMeshing, performSmoothing;
+    // HelpMenu
+    private AbstractAction help;
+
     public MultibeamMenuBar(Vtk vtkMultibeamInit) {
         this.vtkMultibeamInit = vtkMultibeamInit;
     }
-    
+
     public JMenuBar createMultibeamMenuBar() {
         setMenuBar(new JMenuBar());
 
-        file = new JMenu(I18n.text("File"));
+        fileMenu = new JMenu(I18n.text("File"));
         addMenuItemsToFileMenu();
-        edit = new JMenu(I18n.text("Edit"));
+        editMenu = new JMenu(I18n.text("Edit"));
         addMenuItemsToEditMenu();
-        view = new JMenu(I18n.text("View"));
+        viewMenu = new JMenu(I18n.text("View"));
         addMenuItemsToViewMenu();
-        tools = new JMenu(I18n.text("Tools"));
+        toolsMenu = new JMenu(I18n.text("Tools"));
         addMenuItemsToToolsMenu();
-        help = new JMenu(I18n.text("Help"));
+        helpMenu = new JMenu(I18n.text("Help"));
         addMenuItemsToHelpMenu();
 
-        
         getMenuBar().setBackground(Color.GRAY);
-        getMenuBar().add(file);
-        getMenuBar().add(edit);
-        getMenuBar().add(view);
-        getMenuBar().add(tools);
-        
-        getMenuBar().add(help);
-        
+        getMenuBar().add(fileMenu);
+        getMenuBar().add(editMenu);
+        getMenuBar().add(viewMenu);
+        getMenuBar().add(toolsMenu);
+        getMenuBar().add(helpMenu);
+
         return getMenuBar();
     }
 
     private void addMenuItemsToFileMenu() {
         saveFile = new AbstractAction(I18n.text("Save File")) {
-            
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-            }
-        };  
-        
-        saveFileAs = new AbstractAction(I18n.text("Save File as...")) {
-            
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
+
             }
         };
-        
-        file.add(saveFile);
-        file.add(saveFileAs);
+
+        saveFileAs = new AbstractAction(I18n.text("Save File as...")) {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        };
+
+        fileMenu.add(saveFile);
+        fileMenu.add(saveFileAs);
     }
-    
+
     private void addMenuItemsToEditMenu() {
-        
+
     }
-    
+
     private void addMenuItemsToViewMenu() {
-        
+        resetViewportCamera = new MultibeamVisAction(I18n.text("Reset Viewport"), ImageUtils.createImageIcon("/images/menus/camera.png")) {
+            private static final long serialVersionUID = 1982593403207394131L;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    vtkMultibeamInit.canvas.lock();
+                    vtkMultibeamInit.canvas.GetRenderer().GetActiveCamera().SetViewUp(0.0, 0.0, -1.0);
+                    vtkMultibeamInit.canvas.GetRenderer().ResetCamera();
+                    vtkMultibeamInit.canvas.Render();
+                    vtkMultibeamInit.canvas.unlock();
+                }
+                catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
+                
+        };
+
+        viewMenu.add(resetViewportCamera);
     }
-    
+
     private void addMenuItemsToToolsMenu() {
-        
+
     }
-    
+
     private void addMenuItemsToHelpMenu() {
-        
+        help = new HelpMultibeamVisAction(vtkMultibeamInit);
+        helpMenu.add(help);
     }
 
     public JMenuBar getMenuBar() {
