@@ -171,7 +171,14 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
             canvas.GetRenderer().ResetCamera();
             canvas.LightFollowCameraOn();
 
-                // parse 83P data storing it on a pointcloud
+            // add menu bar to layout
+            menuBar = new MultibeamMenuBar(this);
+            add(menuBar.createMultibeamMenuBar(), "dock north");
+
+            // add vtkCanvas to Layout
+            add(canvas, "W 100%, H 50%");
+
+            // parse 83P data storing it on a pointcloud
             multibeamToPointCloud = new MultibeamToPointCloud(getLog(), pointCloud);
             multibeamToPointCloud.parseMultibeamPointCloud();
 

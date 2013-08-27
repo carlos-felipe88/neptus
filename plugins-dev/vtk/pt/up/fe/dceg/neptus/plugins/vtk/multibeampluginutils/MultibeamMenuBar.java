@@ -94,21 +94,24 @@ public class MultibeamMenuBar {
     }
 
     private void addMenuItemsToFileMenu() {
-        saveFile = new AbstractAction(I18n.text("Save File")) {
+        saveFile = new SaveMultibeamVisAction(vtkMultibeamInit);
+//        saveFile = new AbstractAction(I18n.text("Save File")) {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        };
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        };
-
-        saveFileAs = new AbstractAction(I18n.text("Save File as...")) {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        };
+        saveFileAs = new SaveAsMultibeamVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent());
+        
+//        saveFileAs = new AbstractAction(I18n.text("Save File as...")) {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        };
 
         fileMenu.add(saveFile);
         fileMenu.add(saveFileAs);
