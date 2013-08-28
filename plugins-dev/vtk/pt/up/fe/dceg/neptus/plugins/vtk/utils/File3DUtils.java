@@ -38,14 +38,33 @@ import java.io.File;
  *
  */
 public class File3DUtils {
-    public final static String xyzStr = "xyz";
-    public final static String wrlStr = "wrl";
-    public final static String stlStr = "stl";
-    public final static String plyStr = "ply";
-    public final static String objStr = "obj";
-    public final static String treedsStr = "3ds";
-    public final static String vtkStr = "vtk";
+//    public final static String xyzStr = "xyz";
+//    public final static String wrlStr = "wrl";
+//    public final static String stlStr = "stl";
+//    public final static String plyStr = "ply";
+//    public final static String objStr = "obj";
+//    public final static String treedsStr = "3ds";
+//    public final static String x3dStr = "x3d";
+//    public final static String vtkStr = "vtk";
     
+    public final static String[] TYPES_3D_FILES = {
+      "xyz", "wrl", "stl", "ply", "obj", "vtk", "3ds", "x3d"
+    };
+    
+    /**
+     * missing 3DS exporter
+     * @author hfq
+     *
+     */
+    public enum FileType {
+        XYZ, WRL, STL, PLY, OBJ, ThreeDS, X3D, VTK
+    }
+    
+    /**
+     * Returns the string extension from filename
+     * @param f
+     * @return ext 
+     */
     public static String getExtension(File f) {
         String ext = null;
         String s = f.getName();
@@ -57,4 +76,50 @@ public class File3DUtils {
         
         return ext;
     }
+    
+    /**
+     * 
+     * @param ext
+     * @return
+     */
+    public static FileType getFileType(String ext) {
+        
+        FileType type = null;
+        int index = 0;
+        for (String f : TYPES_3D_FILES) {
+            if(f.equals(ext)) {
+                break;
+            }
+            ++index;
+        }
+        switch(index) {
+            case 0:
+                type = FileType.XYZ;
+                break;
+            case 1:
+                type = FileType.WRL;
+                break;
+            case 2:
+                type = FileType.STL;
+                break;
+            case 3:
+                type = FileType.PLY;
+                break;
+            case 4:
+                type = FileType.OBJ;
+                break;
+            case 5:
+                type = FileType.ThreeDS;
+                break;
+            case 6:
+                type = FileType.X3D;
+                break;
+            case 7:
+                type = FileType.VTK;
+                break;
+        }
+        return type;
+    }
 }
+
+

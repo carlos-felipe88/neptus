@@ -46,9 +46,12 @@ import javax.swing.filechooser.FileFilter;
 import pt.up.fe.dceg.neptus.NeptusLog;
 import pt.up.fe.dceg.neptus.i18n.I18n;
 import pt.up.fe.dceg.neptus.plugins.vtk.Vtk;
+import pt.up.fe.dceg.neptus.plugins.vtk.io.Writer3D;
 import pt.up.fe.dceg.neptus.plugins.vtk.utils.File3DUtils;
+import pt.up.fe.dceg.neptus.plugins.vtk.utils.File3DUtils.FileType;
 import pt.up.fe.dceg.neptus.util.GuiUtils;
 import pt.up.fe.dceg.neptus.util.ImageUtils;
+import vtk.vtkRenderWindow;
 
 /**
  * @author hfq
@@ -60,9 +63,15 @@ public class SaveAsMultibeamVisAction extends MultibeamVisAction {
     protected Vtk vtkMultibeamInit;
     private Component parent;
 
+    /**
+     * FIXME - change keyStroke to ctrl+s (same as save)
+     * 
+     * @param vtkMultibeamInit
+     * @param parent
+     */
     public SaveAsMultibeamVisAction(Vtk vtkMultibeamInit, Component parent) {
         super(I18n.text("Save File As..."), new ImageIcon(ImageUtils.getImage("images/menus/saveas.png")), I18n
-                .text("Save a mesh File"), KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK, true));
+                .text("Save a mesh File"), KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK, true));
         this.vtkMultibeamInit = vtkMultibeamInit;
         this.parent = parent;
     }
@@ -80,7 +89,7 @@ public class SaveAsMultibeamVisAction extends MultibeamVisAction {
                 + ", *.ply" + ", *.obj" + ", *.wrl", new String[] { "3DS", "VTK", "STL", "PLY", "OBJ", "WRL" });
         chooser.setFileFilter(fileFilter);
 
-        int ans = chooser.showDialog(parent, I18n.text("Save"));
+        int ans = chooser.showDialog(parent, I18n.text("Save As..."));
         if (ans == JFileChooser.APPROVE_OPTION) {
             if (chooser.getSelectedFile().exists()) {
                 ans = JOptionPane.showConfirmDialog(parent,
@@ -92,11 +101,53 @@ public class SaveAsMultibeamVisAction extends MultibeamVisAction {
             }
             File dst = chooser.getSelectedFile();
             String ext = File3DUtils.getExtension(dst);
-            if (ext.equals(File3DUtils.xyzStr) || ext.equals(File3DUtils.wrlStr) || ext.equals(File3DUtils.stlStr)
-                    || ext.equals(File3DUtils.plyStr) || ext.equals(File3DUtils.objStr)
-                    || ext.equals(File3DUtils.treedsStr) || ext.equals(File3DUtils.vtkStr)) {
-
+            NeptusLog.pub().info("Extension: " + ext);
+            File3DUtils.FileType type = null;
+            type = File3DUtils.getFileType(ext);
+            NeptusLog.pub().info("Filetype: " + type.toString());
+            switch (type) {
+                case XYZ:
+                    //Writer3D.ex
+                    break;
+                case STL:
+                    Writer3D.exportToSTLFileFormat(chooser.getSelectedFile(),
+                            vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly());
+                    break;
+                case OBJ:
+                    Writer3D.exportToOBJFileFormat(chooser.getSelectedFile(),
+                            vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly(),
+                            vtkMultibeamInit.canvas.GetRenderWindow());
+                    break;
+                case PLY:
+                    NeptusLog.pub().info("Saving PLY File");
+                    Writer3D.exportToPLYFileFormat(chooser.getSelectedFile(),
+                            vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly());
+                    break;
+                case ThreeDS:
+                    break;
+                case VTK:
+                    NeptusLog.pub().info("Saving VTK File");
+                    Writer3D.exportToVTKFileFormat(chooser.getSelectedFile(), vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly());
+                    break;
+                case WRL:
+                    NeptusLog.pub().info("Saving WRL File");
+                    Writer3D.exportToVRMLFileFormat(chooser.getSelectedFile(), vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly(), vtkMultibeamInit.canvas.GetRenderWindow());
+                    break;
+                case X3D:
+                    NeptusLog.pub().info("Saving X3D File");
+                    Writer3D.exportToX3DFileFormart(chooser.getSelectedFile(),
+                            vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly(),
+                            vtkMultibeamInit.canvas.GetRenderWindow());
+                    break;
+                default:
+                    NeptusLog.pub().info("Default type... no way!!!");
+                    break;
             }
+//            if (ext.equals(File3DUtils.xyzStr) || ext.equals(File3DUtils.wrlStr) || ext.equals(File3DUtils.stlStr)
+//                    || ext.equals(File3DUtils.plyStr) || ext.equals(File3DUtils.objStr)
+//                    || ext.equals(File3DUtils.treedsStr) || ext.equals(File3DUtils.vtkStr)) {
+//
+//            }
         }
     }
 }
