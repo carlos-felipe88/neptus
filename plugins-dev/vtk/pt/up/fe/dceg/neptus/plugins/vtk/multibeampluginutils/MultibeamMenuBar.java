@@ -101,7 +101,7 @@ public class MultibeamMenuBar {
     }
 
     private void addMenuItemsToFileMenu() {
-        // does it really have to have this?
+        // FIXME - does it really have to have this "save"?
         saveFile = new SaveMultibeamVisAction(vtkMultibeamInit);
         saveFileAs = new SaveAsMultibeamVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent());
 
@@ -122,20 +122,6 @@ public class MultibeamMenuBar {
         };
         
         editMenu.add(configs);
-
-        // configButton = new JButton(new AbstractAction(I18n.text("Configure")) {
-        // private static final long serialVersionUID = -1404112253602290953L;
-        //
-        // @Override
-        // public void actionPerformed(ActionEvent e) {
-        // PropertiesEditor.editProperties(vtkInit, SwingUtilities.getWindowAncestor(vtkInit), true);
-        // if (vtkInit.zExaggeration != currentDepthExaggeValue) {
-        // currentDepthExaggeValue = vtkInit.zExaggeration;
-        // }
-        //
-        // }
-        // });
-        
     }
 
     private void addMenuItemsToViewMenu() {
@@ -156,7 +142,6 @@ public class MultibeamMenuBar {
                     e1.printStackTrace();
                 }
             }
-
         };
 
         viewMenu.add(resetViewportCamera);
