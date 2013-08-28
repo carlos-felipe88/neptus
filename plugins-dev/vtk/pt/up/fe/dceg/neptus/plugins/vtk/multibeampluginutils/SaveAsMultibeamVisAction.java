@@ -66,6 +66,8 @@ public class SaveAsMultibeamVisAction extends MultibeamVisAction {
     /**
      * FIXME - change keyStroke to ctrl+s (same as save)
      * 
+     * FIXME - Needs to check if the user wants to save the pointcloud or the mesh (if meshing was already performed)
+     * 
      * @param vtkMultibeamInit
      * @param parent
      */
@@ -85,8 +87,9 @@ public class SaveAsMultibeamVisAction extends MultibeamVisAction {
     public void actionPerformed(ActionEvent e) {
         JFileChooser chooser = new JFileChooser(vtkMultibeamInit.getLog().getFile("Data.lsf").getParentFile());
 
-        FileFilter fileFilter = GuiUtils.getCustomFileFilter(I18n.text("3D Files ") + "*.3ds," + " *.vtk" + ", *.stl"
-                + ", *.ply" + ", *.obj" + ", *.wrl", new String[] { "3DS", "VTK", "STL", "PLY", "OBJ", "WRL" });
+        // not supported 3ds  + "*.3ds,"
+        FileFilter fileFilter = GuiUtils.getCustomFileFilter(I18n.text("3D Files ") + "*.vtk" + ", *.stl"
+                + ", *.ply" + ", *.obj" + ", *.wrl" + " *.x3d", new String[] { "X3D", "VTK", "STL", "PLY", "OBJ", "WRL" });
         chooser.setFileFilter(fileFilter);
 
         int ans = chooser.showDialog(parent, I18n.text("Save As..."));
@@ -106,14 +109,16 @@ public class SaveAsMultibeamVisAction extends MultibeamVisAction {
             type = File3DUtils.getFileType(ext);
             NeptusLog.pub().info("Filetype: " + type.toString());
             switch (type) {
-                case XYZ:
-                    //Writer3D.ex
-                    break;
+//                case XYZ:
+//                    Writer3D.ex
+//                    break;
                 case STL:
+                    NeptusLog.pub().info("Saving STL File");
                     Writer3D.exportToSTLFileFormat(chooser.getSelectedFile(),
                             vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly());
                     break;
                 case OBJ:
+                    NeptusLog.pub().info("Saving OBJ File");
                     Writer3D.exportToOBJFileFormat(chooser.getSelectedFile(),
                             vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly(),
                             vtkMultibeamInit.canvas.GetRenderWindow());
@@ -123,8 +128,8 @@ public class SaveAsMultibeamVisAction extends MultibeamVisAction {
                     Writer3D.exportToPLYFileFormat(chooser.getSelectedFile(),
                             vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly());
                     break;
-                case ThreeDS:
-                    break;
+//                case ThreeDS:
+//                    break;
                 case VTK:
                     NeptusLog.pub().info("Saving VTK File");
                     Writer3D.exportToVTKFileFormat(chooser.getSelectedFile(), vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly());

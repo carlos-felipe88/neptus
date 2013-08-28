@@ -33,11 +33,17 @@ package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 
+import pt.up.fe.dceg.neptus.gui.PropertiesEditor;
 import pt.up.fe.dceg.neptus.i18n.I18n;
 import pt.up.fe.dceg.neptus.plugins.vtk.Vtk;
 import pt.up.fe.dceg.neptus.util.ImageUtils;
@@ -55,7 +61,8 @@ public class MultibeamMenuBar {
     // fileMenu
     private AbstractAction saveFile, saveFileAs;
     // EditMenu
-    private AbstractAction configDepthColorBounds, zValueExaggeration, downsampleLeafSize;
+    // private AbstractAction configDepthColorBounds, zValueExaggeration, downsampleLeafSize;
+    private AbstractAction configs;
     // ViewMenu
     private AbstractAction resetViewportCamera, incrementPointSize, decrementPointSize, colorGradX, colorGradY,
             colorGradZ, viewPointCloud, viewMesh, pointBasedRep, wireframeRep, surfaceRep, displayLookUpTable,
@@ -94,35 +101,46 @@ public class MultibeamMenuBar {
     }
 
     private void addMenuItemsToFileMenu() {
+        // does it really have to have this?
         saveFile = new SaveMultibeamVisAction(vtkMultibeamInit);
-//        saveFile = new AbstractAction(I18n.text("Save File")) {
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//            }
-//        };
-
         saveFileAs = new SaveAsMultibeamVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent());
-        
-//        saveFileAs = new AbstractAction(I18n.text("Save File as...")) {
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//            }
-//        };
 
         fileMenu.add(saveFile);
         fileMenu.add(saveFileAs);
     }
 
     private void addMenuItemsToEditMenu() {
+        configs = new MultibeamVisAction(I18n.text("Configurations"),
+                ImageUtils.createImageIcon("images/menus/configure.png"), KeyStroke.getKeyStroke(KeyEvent.VK_E,
+                        InputEvent.CTRL_DOWN_MASK, true)) {
+            private static final long serialVersionUID = -4308838142065071256L;
 
+            public void actionPerformed(ActionEvent e) {
+                PropertiesEditor.editProperties(vtkMultibeamInit, SwingUtilities.getWindowAncestor(vtkMultibeamInit),
+                        true);
+            }
+        };
+        
+        editMenu.add(configs);
+
+        // configButton = new JButton(new AbstractAction(I18n.text("Configure")) {
+        // private static final long serialVersionUID = -1404112253602290953L;
+        //
+        // @Override
+        // public void actionPerformed(ActionEvent e) {
+        // PropertiesEditor.editProperties(vtkInit, SwingUtilities.getWindowAncestor(vtkInit), true);
+        // if (vtkInit.zExaggeration != currentDepthExaggeValue) {
+        // currentDepthExaggeValue = vtkInit.zExaggeration;
+        // }
+        //
+        // }
+        // });
+        
     }
 
     private void addMenuItemsToViewMenu() {
-        resetViewportCamera = new MultibeamVisAction(I18n.text("Reset Viewport"), ImageUtils.createImageIcon("/images/menus/camera.png")) {
+        resetViewportCamera = new MultibeamVisAction(I18n.text("Reset Viewport"),
+                ImageUtils.createImageIcon("/images/menus/camera.png")) {
             private static final long serialVersionUID = 1982593403207394131L;
 
             @Override
@@ -138,7 +156,7 @@ public class MultibeamMenuBar {
                     e1.printStackTrace();
                 }
             }
-                
+
         };
 
         viewMenu.add(resetViewportCamera);
