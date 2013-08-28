@@ -116,8 +116,7 @@ public class MultibeamMenuBar {
             private static final long serialVersionUID = -4308838142065071256L;
 
             public void actionPerformed(ActionEvent e) {
-                PropertiesEditor.editProperties(vtkMultibeamInit, SwingUtilities.getWindowAncestor(vtkMultibeamInit),
-                        true);
+                PropertiesEditor.editProperties(vtkMultibeamInit, true);
             }
         };
         

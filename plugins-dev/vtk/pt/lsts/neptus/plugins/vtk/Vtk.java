@@ -256,7 +256,6 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
                 // canvas.GetRenderer().GetActiveCamera().SetPosition(pointCloud.getPoly().GetCenter()[0]
                 // ,pointCloud.getPoly().GetCenter()[1] , pointCloud.getPoly().GetCenter()[2] - 200);
                 canvas.GetRenderer().GetActiveCamera().SetPosition(center[0], center[1], center[2] - 200);
-
                 canvas.GetRenderer().GetActiveCamera().SetViewUp(0.0, 0.0, -1.0);
                 // canvas.Report();
             }
@@ -270,10 +269,11 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
                 canvas.GetRenderer().AddActor(noBeamsText.getText3dActor());
             }
             canvas.RenderSecured();
-            canvas.GetRenderWindow().SetCurrentCursor(9);
-
+            //canvas.GetRenderWindow().SetCurrentCursor(9);
+            canvas.lock();
             canvas.GetRenderer().ResetCamera();
-            canvas.Report();
+            canvas.unlock();
+            //canvas.Report();
         }
         return this;
     }
