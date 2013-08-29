@@ -32,6 +32,7 @@
 package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
 
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -51,17 +52,19 @@ import pt.up.fe.dceg.neptus.plugins.vtk.utils.File3DUtils;
 import pt.up.fe.dceg.neptus.plugins.vtk.utils.File3DUtils.FileType;
 import pt.up.fe.dceg.neptus.util.GuiUtils;
 import pt.up.fe.dceg.neptus.util.ImageUtils;
+import vtk.vtkPolyData;
 import vtk.vtkRenderWindow;
 
 /**
  * @author hfq
  * 
  */
-public class SaveAsMultibeamVisAction extends MultibeamVisAction {
+public class SaveAsPointcloudMultibeamVisAction extends MultibeamVisAction {
     private static final long serialVersionUID = 57188206410572486L;
 
     protected Vtk vtkMultibeamInit;
     private Component parent;
+    private vtkPolyData polyData;
 
     /**
      * FIXME - change keyStroke to ctrl+s (same as save)
@@ -71,11 +74,12 @@ public class SaveAsMultibeamVisAction extends MultibeamVisAction {
      * @param vtkMultibeamInit
      * @param parent
      */
-    public SaveAsMultibeamVisAction(Vtk vtkMultibeamInit, Component parent) {
-        super(I18n.text("Save File As..."), new ImageIcon(ImageUtils.getImage("images/menus/saveas.png")), I18n
-                .text("Save a mesh File"), KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK, true));
+    public SaveAsPointcloudMultibeamVisAction(Vtk vtkMultibeamInit, Component parent, vtkPolyData polyData) {
+        super(I18n.text("Save Pointcloud As..."), new ImageIcon(ImageUtils.getImage("images/menus/saveas.png")), I18n
+                .text("Save a to mesh File"), KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK, true));
         this.vtkMultibeamInit = vtkMultibeamInit;
         this.parent = parent;
+        this.polyData = polyData;
     }
 
     /*
@@ -115,33 +119,33 @@ public class SaveAsMultibeamVisAction extends MultibeamVisAction {
                 case STL:
                     NeptusLog.pub().info("Saving STL File");
                     Writer3D.exportToSTLFileFormat(chooser.getSelectedFile(),
-                            vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly());
+                            polyData);
                     break;
                 case OBJ:
                     NeptusLog.pub().info("Saving OBJ File");
                     Writer3D.exportToOBJFileFormat(chooser.getSelectedFile(),
-                            vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly(),
+                            polyData,
                             vtkMultibeamInit.canvas.GetRenderWindow());
                     break;
                 case PLY:
                     NeptusLog.pub().info("Saving PLY File");
                     Writer3D.exportToPLYFileFormat(chooser.getSelectedFile(),
-                            vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly());
+                            polyData);
                     break;
 //                case ThreeDS:
 //                    break;
                 case VTK:
                     NeptusLog.pub().info("Saving VTK File");
-                    Writer3D.exportToVTKFileFormat(chooser.getSelectedFile(), vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly());
+                    Writer3D.exportToVTKFileFormat(chooser.getSelectedFile(), polyData);
                     break;
                 case WRL:
                     NeptusLog.pub().info("Saving WRL File");
-                    Writer3D.exportToVRMLFileFormat(chooser.getSelectedFile(), vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly(), vtkMultibeamInit.canvas.GetRenderWindow());
+                    Writer3D.exportToVRMLFileFormat(chooser.getSelectedFile(), polyData, vtkMultibeamInit.canvas.GetRenderWindow());
                     break;
                 case X3D:
                     NeptusLog.pub().info("Saving X3D File");
                     Writer3D.exportToX3DFileFormart(chooser.getSelectedFile(),
-                            vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly(),
+                            polyData,
                             vtkMultibeamInit.canvas.GetRenderWindow());
                     break;
                 default:

@@ -37,11 +37,9 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 
 import pt.up.fe.dceg.neptus.gui.PropertiesEditor;
 import pt.up.fe.dceg.neptus.i18n.I18n;
@@ -59,7 +57,7 @@ public class MultibeamMenuBar {
     private JMenu fileMenu, editMenu, viewMenu, toolsMenu, helpMenu;
 
     // fileMenu
-    private AbstractAction saveFile, saveFileAs;
+    private AbstractAction saveFile, saveFileAsPointCloud, saveFileAsMesh;
     // EditMenu
     // private AbstractAction configDepthColorBounds, zValueExaggeration, downsampleLeafSize;
     private AbstractAction configs;
@@ -103,10 +101,12 @@ public class MultibeamMenuBar {
     private void addMenuItemsToFileMenu() {
         // FIXME - does it really have to have this "save"?
         saveFile = new SaveMultibeamVisAction(vtkMultibeamInit);
-        saveFileAs = new SaveAsMultibeamVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent());
-
+        saveFileAsPointCloud = new SaveAsPointcloudMultibeamVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent(), vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly());
+        //if(vtkMultibeamInit.linkedHashMapMesh.get("multibeam") != null)
+            saveFileAsMesh = new SaveAsMeshMultibeamVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent(), vtkMultibeamInit.linkedHashMapMesh.get("multibeam").getPolyData());
         fileMenu.add(saveFile);
-        fileMenu.add(saveFileAs);
+        fileMenu.add(saveFileAsPointCloud);
+        fileMenu.add(saveFileAsMesh);
     }
 
     private void addMenuItemsToEditMenu() {

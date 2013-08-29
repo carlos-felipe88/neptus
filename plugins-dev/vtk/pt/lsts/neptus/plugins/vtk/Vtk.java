@@ -171,6 +171,8 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
             pointCloud = new PointCloud<>();
             pointCloud.setCloudName("multibeam");
             linkedHashMapCloud.put(pointCloud.getCloudName(), pointCloud);
+            PointCloudMesh mesh = new PointCloudMesh();
+            linkedHashMapMesh.put(linkedHashMapCloud.get("multibeam").getCloudName(), mesh);
 
             winCanvas = new Window(canvas, linkedHashMapCloud);
 
