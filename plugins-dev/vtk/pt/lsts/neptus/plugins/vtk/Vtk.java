@@ -106,10 +106,10 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
 
     @NeptusProperty(name = "Depth exaggeration multiplier", description = "Multiplier value for depth exaggeration.")
     public int zExaggeration = 10;
-    
+
     @NeptusProperty(name = "Max depth color bound", description = "Max depth limit (Z axis), for coloring purposes.")
     public double zMaxColorBound = 0.0;
-    
+
     @NeptusProperty(name = "Min depth color bound", description = "Min depth limit (Z axis), for coloring purposes.")
     public double zMinColorBound = 0.0;
 
@@ -271,11 +271,11 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
                 canvas.GetRenderer().AddActor(noBeamsText.getText3dActor());
             }
             canvas.RenderSecured();
-            //canvas.GetRenderWindow().SetCurrentCursor(9);
+            // canvas.GetRenderWindow().SetCurrentCursor(9);
             canvas.lock();
             canvas.GetRenderer().ResetCamera();
             canvas.unlock();
-            //canvas.Report();
+            // canvas.Report();
         }
         return this;
     }
@@ -446,5 +446,4 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
     public void componentHidden(ComponentEvent e) {
 
     }
-
 }

@@ -134,9 +134,10 @@ public class PointCloud<T extends PointXYZ> {
             //setBounds(getPoly().GetBounds());
             //setBounds(PointCloudUtils.computeBounds((PointCloud<PointXYZ>) this));
             setBounds(PointCloudUtils.computeBounds(getPoints()));
-            
+
             getColorHandler().generatePointCloudColorHandlers(getPoly(), bounds, getIntensities());
-                      
+            //getColorHandler().generatePointCloudColorHandlers(getPoly(), bounds);
+           
             getPoly().GetPointData().SetScalars(getColorHandler().getColorsZ());
             
             vtkPolyDataMapper map = new vtkPolyDataMapper();

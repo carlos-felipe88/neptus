@@ -185,6 +185,7 @@ public class NeptusMRA extends JFrame implements PropertiesProvider {
             NeptusLog.pub().error(I18n.text("Not possible to open")
                     + " \"conf/mra.properties\"");
         }
+        
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);
         

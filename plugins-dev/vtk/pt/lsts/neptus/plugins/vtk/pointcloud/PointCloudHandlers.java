@@ -149,7 +149,7 @@ public class PointCloudHandlers<T extends PointXYZ> {
         
         
         if (intensities.GetDataSize() != 0) {
-            //NeptusLog.pub().info("got into built color handler for intens");
+            NeptusLog.pub().info("got into built color handler for intens");
             //NeptusLog.pub().info("Data max: " + intensities.GetValueRange()[0]);
             getLutIntensities().SetRange(0, 32000);
             //intensities.SetNumberOfComponents(1);
@@ -163,6 +163,8 @@ public class PointCloudHandlers<T extends PointXYZ> {
             colorsI.SetNumberOfComponents(3);
             colorsI.SetName("colorsI");
         }
+        
+        NeptusLog.pub().info("gonna create colors");
         
         for (int i = 0; i < polyData.GetNumberOfPoints(); ++i) {
             double[] point = new double[3];
@@ -196,8 +198,10 @@ public class PointCloudHandlers<T extends PointXYZ> {
             colorsX.InsertNextTuple3(colorx[0], colorx[1], colorx[2]);
             colorsY.InsertNextTuple3(colory[0], colory[1], colory[2]);
             colorsZ.InsertNextTuple3(colorz[0], colorz[1], colorz[2]);
-            colorsI.InsertNextTuple3(colori[0], colori[1], colori[2]);
+            //colorsI.InsertNextTuple3(colori[0], colori[1], colori[2]);
+            colorsI.InsertNextTuple3(0, 0, 0);
         }
+        NeptusLog.pub().info("Inserted colors on tuples");
     }   
 
     /**

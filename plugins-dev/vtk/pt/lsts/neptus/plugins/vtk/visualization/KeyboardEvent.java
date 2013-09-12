@@ -84,7 +84,7 @@ public class KeyboardEvent implements KeyListener {
 
     private static final boolean VTKIS_ANIMEOFF = false;
     private static final boolean VTKIS_ANIMEON = true;
-    protected boolean AnimeState = VTKIS_ANIMEOFF;
+    @SuppressWarnings("unused")
 
     /**
      * @param canvas
@@ -117,12 +117,8 @@ public class KeyboardEvent implements KeyListener {
                         actorCollection.InitTraversal();
 
                         for (int i = 0; i < actorCollection.GetNumberOfItems(); ++i) {
-                            // vtkLODActor tempActor = new vtkLODActor();
-
                             if (actorCollection.GetNextActor().IsA("vtkActor2D") > 0)
                                 continue;
-                            // tempActor = (vtkLODActor) actorCollection.GetNextActor();
-
                             setOfClouds = linkedHashMapCloud.keySet();
                             for (String skey : setOfClouds) {
                                 pointCloud = linkedHashMapCloud.get(skey);
@@ -159,7 +155,6 @@ public class KeyboardEvent implements KeyListener {
                     }
                     canvas.lock();
                     canvas.Render();
-                    // interactor.Render();
                     canvas.unlock();
                 }
                 catch (Exception e6) {
@@ -373,7 +368,6 @@ public class KeyboardEvent implements KeyListener {
                             }
                         }
                     }
-
                 }
                 catch (Exception e) {
                     e.printStackTrace();

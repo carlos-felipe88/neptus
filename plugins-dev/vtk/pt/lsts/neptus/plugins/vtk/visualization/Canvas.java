@@ -31,7 +31,6 @@
  */
 package pt.lsts.neptus.plugins.vtk.visualization;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.SwingUtilities;
@@ -48,19 +47,16 @@ import vtk.vtkUnsignedCharArray;
  * Overrides some functionalities of vtkCanvas (vtkCanvas extends vtkPanel)
  */
 public class Canvas extends vtkCanvas {
-    
-    /**
-     * 
-     */
     private static final long serialVersionUID = 5165188310777500794L;
     
-    // for 2D Grapihics
+    // for 2D Graphics
     private vtkUnsignedCharArray buffer = new vtkUnsignedCharArray();
     private int bufferWidth, bufferHeight = 0;
 
     public Canvas() {
-        setMinimumSize(new Dimension(0, 0));
-        setPreferredSize(new Dimension(0, 0));
+        super();
+        //new MigLayout("fill");
+        
     }
     
     /**
@@ -79,8 +75,10 @@ public class Canvas extends vtkCanvas {
         });
     }
     
+    /**
+     * for secure rendering the viewport
+     */
     @Override
-    //public void Render() {
     public synchronized void Render() {
         if (!rendering)
         {
@@ -116,12 +114,18 @@ public class Canvas extends vtkCanvas {
         }
     }
     
+    /**
+     * lock for secure rendering
+     */
     @Override
     public void lock() {
         if (isWindowSet())
             super.lock();
     }
     
+    /**
+     * unlock
+     */
     @Override
     public void unlock() {
         if (isWindowSet())
@@ -178,6 +182,9 @@ public class Canvas extends vtkCanvas {
         SwingUtilities.invokeLater(updateAComponent);
     }
     
+    /**
+     * secure paint graphics on viewport
+     */
     @Override
     public void paint(Graphics g) {
         if (windowset == 0 || bufferWidth != getWidth() || bufferHeight != getHeight()) {
@@ -190,36 +197,60 @@ public class Canvas extends vtkCanvas {
         }
     }
 
+    /**
+     * @return crtlPressed
+     */
     public int getCtrlPressed() {
         return ctrlPressed;
     }
     
+    /**
+     * @param ctrlPressed
+     */
     public void setCtrlPressed(int ctrlPressed) {
         this.ctrlPressed = ctrlPressed;
     }
     
+    /**
+     * @return
+     */
     public int getShiftPressed() {
         return shiftPressed;
     }
     
+    /**
+     * @param shiftPressed
+     */
     public void setShiftPressed(int shiftPressed) {
         this.shiftPressed = shiftPressed;
     }
     
+    /**
+     * @return last x pos
+     */
     public int getLastX() {
         return lastX;
     }
     
+    /**
+     * set last x pos
+     * @param lastX
+     */
     public void setLastX(int lastX) {
         this.lastX = lastX;
     }
     
+    /**
+     * @return last y pos
+     */
     public int getLastY() {
         return lastY;
     }
     
+    /**
+     * @param lastY set last y pos
+     */
     public void setLastY(int lastY) {
         this.lastY = lastX;
-    }
-    
+    } 
 }
