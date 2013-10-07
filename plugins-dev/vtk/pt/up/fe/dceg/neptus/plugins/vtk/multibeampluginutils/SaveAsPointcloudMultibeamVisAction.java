@@ -32,7 +32,6 @@
 package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
 
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -49,11 +48,9 @@ import pt.up.fe.dceg.neptus.i18n.I18n;
 import pt.up.fe.dceg.neptus.plugins.vtk.Vtk;
 import pt.up.fe.dceg.neptus.plugins.vtk.io.Writer3D;
 import pt.up.fe.dceg.neptus.plugins.vtk.utils.File3DUtils;
-import pt.up.fe.dceg.neptus.plugins.vtk.utils.File3DUtils.FileType;
 import pt.up.fe.dceg.neptus.util.GuiUtils;
 import pt.up.fe.dceg.neptus.util.ImageUtils;
 import vtk.vtkPolyData;
-import vtk.vtkRenderWindow;
 
 /**
  * @author hfq

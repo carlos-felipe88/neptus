@@ -84,7 +84,8 @@ public class KeyboardEvent implements KeyListener {
 
     private static final boolean VTKIS_ANIMEOFF = false;
     private static final boolean VTKIS_ANIMEON = true;
-    @SuppressWarnings("unused")
+    //@SuppressWarnings("unused")
+    protected static boolean AnimeState = VTKIS_ANIMEOFF;
 
     /**
      * @param canvas
