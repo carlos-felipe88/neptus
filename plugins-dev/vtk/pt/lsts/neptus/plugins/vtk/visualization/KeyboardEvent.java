@@ -79,12 +79,12 @@ public class KeyboardEvent implements KeyListener {
 
     public ColorMappingRelation colorMapRel;
 
-    private Caption captionInfo;
+    private InfoCaptionPointcloud captionInfo;
     private Boolean captionEnabled = false;
 
     private static final boolean VTKIS_ANIMEOFF = false;
     private static final boolean VTKIS_ANIMEON = true;
-    //@SuppressWarnings("unused")
+    // @SuppressWarnings("unused")
     protected static boolean AnimeState = VTKIS_ANIMEOFF;
 
     /**
@@ -313,9 +313,10 @@ public class KeyboardEvent implements KeyListener {
                         // }
                         // }
                         // setOfClouds = linkedHashMapCloud.keySet();
-                        captionInfo = new Caption(4, 250, linkedHashMapCloud.get("multibeam").getNumberOfPoints(),
-                                linkedHashMapCloud.get("multibeam").getCloudName(), linkedHashMapCloud.get("multibeam")
-                                        .getBounds(), linkedHashMapCloud.get("multibeam").getMemorySize());
+                        captionInfo = new InfoCaptionPointcloud(4, 250, linkedHashMapCloud.get("multibeam")
+                                .getNumberOfPoints(), linkedHashMapCloud.get("multibeam").getCloudName(),
+                                linkedHashMapCloud.get("multibeam").getBounds(), linkedHashMapCloud.get("multibeam")
+                                        .getMemorySize());
 
                         renderer.AddActor(captionInfo.getCaptionNumberOfPointsActor());
                         renderer.AddActor(captionInfo.getCaptionCloudNameActor());

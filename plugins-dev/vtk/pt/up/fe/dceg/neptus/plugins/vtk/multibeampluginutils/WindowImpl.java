@@ -29,22 +29,25 @@
  * Author: hfq
  * Apr 11, 2013
  */
-package pt.up.fe.dceg.neptus.plugins.vtk.visualization;
+package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
 
 import java.util.LinkedHashMap;
 
+import pt.up.fe.dceg.neptus.NeptusLog;
 import pt.up.fe.dceg.neptus.plugins.vtk.pointcloud.PointCloud;
 import pt.up.fe.dceg.neptus.plugins.vtk.pointtypes.PointXYZ;
+import pt.up.fe.dceg.neptus.plugins.vtk.visualization.Canvas;
+import pt.up.fe.dceg.neptus.plugins.vtk.visualization.IWindow;
+import pt.up.fe.dceg.neptus.plugins.vtk.visualization.NeptusInteractorStyle;
 import vtk.vtkPanel;
 import vtk.vtkRenderWindow;
 import vtk.vtkRenderWindowInteractor;
 import vtk.vtkRenderer;
 
-
 /**
- * @author hfq config vtk window
+ * @author hfq config vtk multibeam window
  */
-public class WindowImpl implements Window{
+public class WindowImpl implements IWindow {
     public LinkedHashMap<String, PointCloud<PointXYZ>> linkedHashMapCloud;
 
     private vtkPanel panel;
@@ -64,9 +67,10 @@ public class WindowImpl implements Window{
      * @param panel
      * @param linkedHashMapCloud set all vtk render components of a vtkPanel
      */
-    public WindowImpl(vtkPanel panel, LinkedHashMap<String, PointCloud<PointXYZ>> linkedHashMapCloud) {
+    public WindowImpl(vtkPanel panel, String windowName, LinkedHashMap<String, PointCloud<PointXYZ>> linkedHashMapCloud) {
         this.panel = new vtkPanel();
         this.panel = panel;
+        this.windowName = windowName;
         this.linkedHashMapCloud = linkedHashMapCloud;
 
         // a Renderer
@@ -74,7 +78,7 @@ public class WindowImpl implements Window{
             setRenderer(this.panel.GetRenderer());
         }
         catch (Exception e) {
-            System.out.println("Exception set renderer");
+            NeptusLog.pub().error("Exception on set up renderer");
             e.printStackTrace();
         }
 
@@ -83,7 +87,7 @@ public class WindowImpl implements Window{
             setRenWin(this.panel.GetRenderWindow());
         }
         catch (Exception e) {
-            System.out.println("Exception set render window");
+            NeptusLog.pub().error("Exception set render window");
             e.printStackTrace();
         }
 
@@ -92,7 +96,7 @@ public class WindowImpl implements Window{
             setRenWinInteractor(this.panel.GetRenderWindow().GetInteractor());
         }
         catch (Exception e) {
-            System.out.println("Exception set render window interactor");
+            NeptusLog.pub().error("Exception set render window interactor");
             e.printStackTrace();
         }
 
@@ -102,7 +106,6 @@ public class WindowImpl implements Window{
         setUpInteractorStyle();
 
         // set up camera to +z viewpoint looking down
-
         getRenderer().GetActiveCamera().SetViewUp(0.0, 0.0, -1.0);
         getRenderer().GetActiveCamera().Render(getRenderer());
         getRenderer().Render();
@@ -112,10 +115,9 @@ public class WindowImpl implements Window{
      * @param canvas
      * @param hashCloud set all vtk render components of a vtkCanvas
      */
-    // public Window(vtkCanvas canvas, LinkedHashMap<String, PointCloud<PointXYZ>> linkedHashMapCloud) {
-    public WindowImpl(Canvas canvas, LinkedHashMap<String, PointCloud<PointXYZ>> linkedHashMapCloud) {
-        // this.canvas = new vtkCanvas();
+    public WindowImpl(Canvas canvas, String windowName, LinkedHashMap<String, PointCloud<PointXYZ>> linkedHashMapCloud) {
         this.canvas = canvas;
+        this.windowName = windowName;
         this.linkedHashMapCloud = linkedHashMapCloud;
 
         // a Renderer
@@ -123,7 +125,7 @@ public class WindowImpl implements Window{
             setRenderer(this.canvas.GetRenderer());
         }
         catch (Exception e) {
-            System.out.println("Exception set renderer");
+            NeptusLog.pub().error("Exception set renderer");
             e.printStackTrace();
         }
 
@@ -132,7 +134,7 @@ public class WindowImpl implements Window{
             setRenWin(this.canvas.GetRenderWindow());
         }
         catch (Exception e) {
-            System.out.println("Exception set render window");
+            NeptusLog.pub().error("Exception set render window");
             e.printStackTrace();
         }
 
@@ -141,7 +143,7 @@ public class WindowImpl implements Window{
             setRenWinInteractor(this.canvas.getRenderWindowInteractor());
         }
         catch (Exception e) {
-            System.out.println("Exception set render window interactor");
+            NeptusLog.pub().error("Exception set render window interactor");
             e.printStackTrace();
         }
 
@@ -172,7 +174,6 @@ public class WindowImpl implements Window{
     @Override
     public void setUpRenWin() {
         try {
-            windowName = "viewportNeptus";
             getRenWin().SetWindowName(windowName);
             getRenWin().AlphaBitPlanesOff();
             getRenWin().PointSmoothingOff();
@@ -195,12 +196,11 @@ public class WindowImpl implements Window{
             getRenWinInteractor().SetRenderWindow(getRenWin());
         }
         catch (Exception e) {
-            System.out.println("Exception set render window interactor");
+            NeptusLog.pub().error("Exception set render window interactor");
             e.printStackTrace();
         }
 
         getRenWinInteractor().SetDesiredUpdateRate(30.0);
-        // NeptusLog.pub().info("Desired update rate: " + getRenWinInteractor().GetDesiredUpdateRate());
     }
 
     /**
@@ -213,7 +213,7 @@ public class WindowImpl implements Window{
             getRenWinInteractor().SetInteractorStyle(interactorStyle);
         }
         catch (Exception e) {
-            System.out.println("Exception set interact Style - Neptus");
+            NeptusLog.pub().error("Exception set interact Style - Neptus");
             e.printStackTrace();
         }
     }
@@ -266,11 +266,4 @@ public class WindowImpl implements Window{
     public NeptusInteractorStyle getInteractorStyle() {
         return interactorStyle;
     }
-
-//    /**
-//     * @param interactorStyle the interactorStyle to set
-//     */
-//    private void setInteractorStyle(NeptusInteractorStyle interactorStyle) {
-//        this.interactorStyle = interactorStyle;
-//    }
 }
