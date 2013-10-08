@@ -391,15 +391,18 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
      */
     @Override
     public void componentResized(ComponentEvent e) {
+        Rectangle newMenuBarBounds = new Rectangle();
+        // newMenuBarBounds.setBounds(0, 0, menuBarBounds.width, 25);
+        newMenuBarBounds.setBounds(0, -5, canvas.getParent().getWidth(), canvas.getHeight());
+        menuBar.getMenuBar().setBounds(newMenuBarBounds);
+        
+        
         Rectangle parentparentBounds = new Rectangle();
         parentparentBounds.setBounds(0, 0, canvas.getParent().getParent().getWidth(), canvas.getParent()
                 .getParent().getHeight() - 12);
         canvas.getParent().setBounds(parentparentBounds);
         //
-        Rectangle newMenuBarBounds = new Rectangle();
-        // newMenuBarBounds.setBounds(0, 0, menuBarBounds.width, 25);
-        newMenuBarBounds.setBounds(0, -5, canvas.getParent().getWidth(), canvas.getHeight());
-        menuBar.getMenuBar().setBounds(newMenuBarBounds);
+
 
         Rectangle canvasBounds = new Rectangle();
         canvasBounds.setBounds(canvas.getX(), canvas.getY(), canvas.getParent().getWidth(), canvas.getParent()

@@ -56,7 +56,7 @@ import vtk.vtkPolyData;
  * @author hfq
  *
  */
-public class SaveAsMeshMultibeamVisAction extends MultibeamVisAction{
+public class SaveAsMeshMultibeamVisAction extends VisualizationAction{
     private static final long serialVersionUID = 4451997140932843128L;
 
     protected Vtk vtkMultibeamInit;

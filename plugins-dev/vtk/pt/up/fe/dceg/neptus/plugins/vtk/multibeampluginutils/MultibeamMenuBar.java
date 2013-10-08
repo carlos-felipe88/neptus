@@ -31,11 +31,17 @@
  */
 package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
 
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -57,9 +63,8 @@ public class MultibeamMenuBar extends JPanel {
     private static final long serialVersionUID = 5376238692133036828L;
 
     private Vtk vtkMultibeamInit;
-
-    private JLabel iconLabel;
-    private JLabel textLabel;
+   
+    // ImageUtils.getIcon("images/buttons/model3d.png")
 
     private JMenuBar menuBar;
     private JMenu fileMenu, editMenu, viewMenu, toolsMenu, helpMenu;
@@ -86,11 +91,22 @@ public class MultibeamMenuBar extends JPanel {
         // this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(),
         // BorderFactory.createEmptyBorder(0, 0, 0, 0)));
     }
+    
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D graphic2d = (Graphics2D) g;
+        Color color1 = getBackground();
+        Color color2 = Color.GRAY;
+        GradientPaint gradPaint = new GradientPaint(0, 0, color2, getWidth(), getHeight(), color1);
+        graphic2d.setPaint(gradPaint);
+        graphic2d.fillRect(0, 0, getWidth(), getHeight());
+    }
 
     public JPanel createMultibeamMenuBar() {
         setMenuBar(new JMenuBar());
         getMenuBar().setLayout(new MigLayout());
-
+        
         fileMenu = new JMenu(I18n.text("File"));
         // fileMenu.setBounds(fileMenu.getX(), fileMenu.getY(), this.getWidth(), this.getHeight());
         addMenuItemsToFileMenu();
@@ -111,7 +127,7 @@ public class MultibeamMenuBar extends JPanel {
         getMenuBar().add(helpMenu);
 
         getMenuBar().setOpaque(false);
-        getMenuBar().setBounds(0, 0, this.getWidth(), this.getHeight());
+        //getMenuBar().setBounds(0, 0, this.getWidth(), this.getHeight());
 
         this.add(getMenuBar());
 
@@ -120,8 +136,8 @@ public class MultibeamMenuBar extends JPanel {
 
     private void addMenuItemsToFileMenu() {
         // FIXME - does it really have to have this "save"?
-        saveFile = new SaveMultibeamVisAction(vtkMultibeamInit);
-        saveFileAsPointCloud = new SaveAsPointcloudMultibeamVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent(),
+        saveFile = new SaveVisAction(vtkMultibeamInit);
+        saveFileAsPointCloud = new SaveAsPointcloudVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent(),
                 vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly());
         // if(vtkMultibeamInit.linkedHashMapMesh.get("multibeam") != null)
         saveFileAsMesh = new SaveAsMeshMultibeamVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent(),
@@ -132,7 +148,7 @@ public class MultibeamMenuBar extends JPanel {
     }
 
     private void addMenuItemsToEditMenu() {
-        configs = new MultibeamVisAction(I18n.text("Configurations"),
+        configs = new VisualizationAction(I18n.text("Configurations"),
                 ImageUtils.createImageIcon("images/menus/configure.png"), KeyStroke.getKeyStroke(KeyEvent.VK_E,
                         InputEvent.CTRL_DOWN_MASK, true)) {
             private static final long serialVersionUID = -4308838142065071256L;
@@ -146,7 +162,7 @@ public class MultibeamMenuBar extends JPanel {
     }
 
     private void addMenuItemsToViewMenu() {
-        resetViewportCamera = new MultibeamVisAction(I18n.text("Reset Viewport"),
+        resetViewportCamera = new VisualizationAction(I18n.text("Reset Viewport"),
                 ImageUtils.createImageIcon("/images/menus/camera.png")) {
             private static final long serialVersionUID = 1982593403207394131L;
 
@@ -173,7 +189,7 @@ public class MultibeamMenuBar extends JPanel {
     }
 
     private void addMenuItemsToHelpMenu() {
-        help = new HelpMultibeamVisAction(vtkMultibeamInit);
+        help = new HelpVisAction(vtkMultibeamInit);
         helpMenu.add(help);
     }
 

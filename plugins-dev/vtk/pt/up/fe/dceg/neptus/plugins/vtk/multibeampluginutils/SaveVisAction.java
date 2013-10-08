@@ -46,12 +46,12 @@ import pt.up.fe.dceg.neptus.util.ImageUtils;
  * @author hfq
  * 
  */
-public class SaveMultibeamVisAction extends MultibeamVisAction {
+public class SaveVisAction extends VisualizationAction {
     private static final long serialVersionUID = 1697337194946432718L;
     
     protected Vtk vtkMultibeamInit;
 
-    public SaveMultibeamVisAction(Vtk vtkMultibeamInit) {
+    public SaveVisAction(Vtk vtkMultibeamInit) {
         super(I18n.text("Save File"), new ImageIcon(ImageUtils.getImage("images/menus/save.png")), I18n.text("Save File"),
                 KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK, true));
         this.vtkMultibeamInit = vtkMultibeamInit;

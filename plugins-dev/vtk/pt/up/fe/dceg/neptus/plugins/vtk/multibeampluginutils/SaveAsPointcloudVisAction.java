@@ -56,7 +56,7 @@ import vtk.vtkPolyData;
  * @author hfq
  * 
  */
-public class SaveAsPointcloudMultibeamVisAction extends MultibeamVisAction {
+public class SaveAsPointcloudVisAction extends VisualizationAction {
     private static final long serialVersionUID = 57188206410572486L;
 
     protected Vtk vtkMultibeamInit;
@@ -71,7 +71,7 @@ public class SaveAsPointcloudMultibeamVisAction extends MultibeamVisAction {
      * @param vtkMultibeamInit
      * @param parent
      */
-    public SaveAsPointcloudMultibeamVisAction(Vtk vtkMultibeamInit, Component parent, vtkPolyData polyData) {
+    public SaveAsPointcloudVisAction(Vtk vtkMultibeamInit, Component parent, vtkPolyData polyData) {
         super(I18n.text("Save Pointcloud As..."), new ImageIcon(ImageUtils.getImage("images/menus/saveas.png")), I18n
                 .text("Save a to mesh File"), KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK, true));
         this.vtkMultibeamInit = vtkMultibeamInit;

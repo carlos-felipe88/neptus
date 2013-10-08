@@ -48,13 +48,13 @@ import pt.up.fe.dceg.neptus.util.conf.ConfigFetch;
  * @author hfq
  * 
  */
-public class HelpMultibeamVisAction extends MultibeamVisAction {
+public class HelpVisAction extends VisualizationAction {
 
     private static final long serialVersionUID = 4220751581169178890L;
 
     protected Vtk vtkMultibeamInit;
 
-    public HelpMultibeamVisAction(Vtk vtkMultibeamInit) {
+    public HelpVisAction(Vtk vtkMultibeamInit) {
         super(I18n.text("Help"), ImageUtils.createImageIcon("images/menus/info.png"), I18n.text("Help"), KeyStroke
                 .getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_DOWN_MASK));
         this.vtkMultibeamInit = vtkMultibeamInit;

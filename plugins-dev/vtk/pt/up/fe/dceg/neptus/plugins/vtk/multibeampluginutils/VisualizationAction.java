@@ -40,20 +40,20 @@ import javax.swing.KeyStroke;
  * @author hfq
  *
  */
-public abstract class MultibeamVisAction extends AbstractAction {
+public abstract class VisualizationAction extends AbstractAction {
     
     private static final long serialVersionUID = 2551343360089311353L;
 
     /**
      * 
      */
-    public MultibeamVisAction() {     
+    public VisualizationAction() {     
     }
     
     /**
      * @param text
      */
-    public MultibeamVisAction(String text) {
+    public VisualizationAction(String text) {
         super(text);
     }
     
@@ -61,7 +61,7 @@ public abstract class MultibeamVisAction extends AbstractAction {
      * @param text
      * @param icon
      */
-    public MultibeamVisAction(String text, ImageIcon icon) {
+    public VisualizationAction(String text, ImageIcon icon) {
         super(text, icon);
     }
     
@@ -70,7 +70,7 @@ public abstract class MultibeamVisAction extends AbstractAction {
      * @param icon
      * @param description
      */
-    public MultibeamVisAction(String text, ImageIcon icon, String description) {
+    public VisualizationAction(String text, ImageIcon icon, String description) {
         super(text, icon);
         putValue(Action.SHORT_DESCRIPTION, description);
     }
@@ -81,7 +81,7 @@ public abstract class MultibeamVisAction extends AbstractAction {
      * @param description
      * @param mnemonic
      */
-    public MultibeamVisAction(String text, ImageIcon icon, String description, Integer mnemonic) {
+    public VisualizationAction(String text, ImageIcon icon, String description, Integer mnemonic) {
         super(text, icon);
         putValue(Action.SHORT_DESCRIPTION, description);
         putValue(Action.MNEMONIC_KEY, mnemonic);
@@ -94,7 +94,7 @@ public abstract class MultibeamVisAction extends AbstractAction {
      * @param mnemonic
      * @param accelerator
      */
-    public MultibeamVisAction(String text, ImageIcon icon, String description, Integer mnemonic, KeyStroke accelerator) {
+    public VisualizationAction(String text, ImageIcon icon, String description, Integer mnemonic, KeyStroke accelerator) {
         super(text, icon);
         putValue(Action.SHORT_DESCRIPTION, description);
         putValue(Action.MNEMONIC_KEY, mnemonic);
@@ -107,7 +107,7 @@ public abstract class MultibeamVisAction extends AbstractAction {
      * @param description
      * @param accelerator
      */
-    public MultibeamVisAction(String text, ImageIcon icon, String description, KeyStroke accelerator) {
+    public VisualizationAction(String text, ImageIcon icon, String description, KeyStroke accelerator) {
         super(text, icon);
         putValue(Action.SHORT_DESCRIPTION, description);
         putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -118,7 +118,7 @@ public abstract class MultibeamVisAction extends AbstractAction {
      * @param icon
      * @param accelerator
      */
-    public MultibeamVisAction(String text, ImageIcon icon, KeyStroke accelerator) {
+    public VisualizationAction(String text, ImageIcon icon, KeyStroke accelerator) {
         super(text, icon);
         putValue(Action.ACCELERATOR_KEY, accelerator);
     }
