@@ -32,6 +32,7 @@
 package pt.lsts.neptus.plugins.vtk;
 
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -74,11 +75,6 @@ import com.l2fprod.common.propertysheet.Property;
 /**
  * @author hfq
  * 
- *         #define VTK_CURSOR_DEFAULT 0 76 #define VTK_CURSOR_ARROW 1 77 #define VTK_CURSOR_SIZENE 2 78 #define
- *         VTK_CURSOR_SIZENW 3 79 #define VTK_CURSOR_SIZESW 4 80 #define VTK_CURSOR_SIZESE 5 81 #define
- *         VTK_CURSOR_SIZENS 6 82 #define VTK_CURSOR_SIZEWE 7 83 #define VTK_CURSOR_SIZEALL 8 84 #define VTK_CURSOR_HAND
- *         9 85 #define VTK_CURSOR_CROSSHAIR 10
- * 
  */
 @PluginDescription(author = "hfq", name = "Vtk")
 public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider, ComponentListener {
@@ -117,14 +113,13 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
     // behaviour and performance.
     public Canvas canvas;
 
-    
     public WindowImpl winCanvas;
 
     public vtkLODActor noBeamsTxtActor;
 
     public Text3D noBeamsText;
 
-    //private MultibeamToolbar toolbar;
+    // private MultibeamToolbar toolbar;
     private MultibeamMenuBar menuBar;
 
     private static final String FILE_83P_EXT = ".83P";
@@ -143,12 +138,11 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
 
     public MultibeamToPointCloud multibeamToPointCloud;
 
-
     /**
      * @param panel
      */
     public Vtk(MRAPanel panel) {
-        super(new MigLayout("fill"));
+        super(new MigLayout());
         Utils.loadVTKLibraries();
     }
 
@@ -175,14 +169,15 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
             canvas.GetRenderer().ResetCamera();
             canvas.LightFollowCameraOn();
 
+            // add vtkCanvas to Layout
+            add(canvas, "W 100%, H 100%");
+            // JPanel panel = new JPanel(new MigLayout());
+            // panel.add(canvas, "W 100%, H 100%");
+            // add(panel, "W 100%, H 100%, dock south");
+
             // add menu bar to layout
             menuBar = new MultibeamMenuBar(this);
             add(menuBar.createMultibeamMenuBar(), "dock north");
-
-            // add vtkCanvas to Layout
-            // add(canvas, "W 100%, H 100%");
-            //add(canvas, "W 100%, H 95%");
-            add(canvas, "W 100%, H 95%");
 
             // parse 83P data storing it on a pointcloud
             multibeamToPointCloud = new MultibeamToPointCloud(getLog(), pointCloud);
@@ -237,33 +232,25 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
                     pointCloud.createLODActorFromPoints();
                     NeptusLog.pub().info("create LOD actor without intensities");
                 }
-                
-                NeptusLog.pub().info("Going to delete points");
+
                 Utils.delete(multibeamToPointCloud.getPoints());
-                NeptusLog.pub().info("Deleted points");
                 // canvas.unlock();
 
                 // add parsed beams stored on pointcloud to canvas
                 canvas.GetRenderer().AddActor(pointCloud.getCloudLODActor());
-                NeptusLog.pub().info("Added actor to viewport");
                 // set Up scalar Bar look up table
                 winCanvas.getInteractorStyle().getScalarBar()
                         .setUpScalarBarLookupTable(pointCloud.getColorHandler().getLutZ());
-                NeptusLog.pub().info("Setted up Look up table z");
                 canvas.GetRenderer().AddActor(winCanvas.getInteractorStyle().getScalarBar().getScalarBarActor());
-                NeptusLog.pub().info("Added actor scalar bar to viewport");
                 // set up camera to +z viewpoint looking down
                 double[] center = new double[3];
                 center = PointCloudUtils.computeCenter(pointCloud);
-                NeptusLog.pub().info("Computed pointcloud center");
 
                 // canvas.GetRenderer().GetActiveCamera().SetPosition(pointCloud.getPoly().GetCenter()[0]
                 // ,pointCloud.getPoly().GetCenter()[1] , pointCloud.getPoly().GetCenter()[2] - 200);
                 canvas.GetRenderer().GetActiveCamera().SetPosition(center[0], center[1], center[2] - 200);
-                NeptusLog.pub().info("Setted camera position");
                 canvas.GetRenderer().GetActiveCamera().SetViewUp(0.0, 0.0, -1.0);
-                NeptusLog.pub().info("Setted camera view up");
-                
+
                 // canvas.Report();
             }
             else { // if no beams were parsed
@@ -276,13 +263,12 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
                 canvas.GetRenderer().AddActor(noBeamsText.getText3dActor());
             }
 
-            // it crashes here if i do a reset camera
-                // canvas.GetRenderWindow().SetCurrentCursor(9);
+            canvas.setCursor(new Cursor(Cursor.HAND_CURSOR));
             canvas.lock();
             canvas.RenderSecured();
             canvas.GetRenderer().ResetCamera();
             canvas.unlock();
-                // canvas.Report();
+            // canvas.Report();
         }
         return this;
     }
@@ -405,37 +391,20 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
      */
     @Override
     public void componentResized(ComponentEvent e) {
-
-        // Rectangle toolbarBounds = toolbar.getToolbar().getBounds();
+        Rectangle parentparentBounds = new Rectangle();
+        parentparentBounds.setBounds(0, 0, canvas.getParent().getParent().getWidth(), canvas.getParent()
+                .getParent().getHeight() - 12);
+        canvas.getParent().setBounds(parentparentBounds);
         //
-        // Rectangle parentBounds = new Rectangle();
-        // parentBounds.setBounds(canvas.getParent().getX(), canvas.getParent().getY(), canvas.getParent().getParent()
-        // .getWidth() - 6, canvas.getParent().getParent().getHeight() - 12); // - toolBarBounds.getHeight()
-        // canvas.getParent().setBounds(parentBounds);
-        //
-        // Rectangle canvasBounds = new Rectangle();
-        // canvasBounds.setBounds(canvas.getX(), canvas.getY(), canvas.getParent().getWidth() - 6, (int) (canvas
-        // .getParent().getHeight() - toolbarBounds.getHeight()));
-        // canvas.setBounds(canvasBounds);
-        //
-        // Rectangle newToolbarBounds = new Rectangle();
-        // newToolbarBounds.setBounds(toolbarBounds.x, (canvas.getY() + canvas.getHeight()), toolbarBounds.width,
-        // toolbarBounds.height);
-        // toolbar.getToolbar().setBounds(newToolbarBounds);
+        Rectangle newMenuBarBounds = new Rectangle();
+        // newMenuBarBounds.setBounds(0, 0, menuBarBounds.width, 25);
+        newMenuBarBounds.setBounds(0, -5, canvas.getParent().getWidth(), canvas.getHeight());
+        menuBar.getMenuBar().setBounds(newMenuBarBounds);
 
-        Rectangle menuBarBounds = menuBar.getMenuBar().getBounds();
-
-        Rectangle parentBounds = new Rectangle();
-//        parentBounds.setBounds(canvas.getParent().getX(), canvas.getParent().getY(), canvas.getParent().getParent()
-//                .getWidth() - 6, canvas.getParent().getParent().getHeight() - 12); // - toolBarBounds.getHeight()
-//        canvas.getParent().setBounds(parentBounds);
-        
-         Rectangle canvasBounds = new Rectangle();
-         canvasBounds.setBounds(canvas.getX(), canvas.getY(), canvas.getParent().getWidth(), (int) (canvas.getParent().getHeight()));
-         canvas.setBounds(canvasBounds);
-         
-         Rectangle newCanvasBounds = new Rectangle();
-
+        Rectangle canvasBounds = new Rectangle();
+        canvasBounds.setBounds(canvas.getX(), canvas.getY(), canvas.getParent().getWidth(), canvas.getParent()
+                .getHeight() - 26);
+        canvas.setBounds(canvasBounds);
     }
 
     /*

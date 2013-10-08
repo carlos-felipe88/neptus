@@ -31,16 +31,18 @@
  */
 package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import net.miginfocom.swing.MigLayout;
 import pt.up.fe.dceg.neptus.gui.PropertiesEditor;
 import pt.up.fe.dceg.neptus.i18n.I18n;
 import pt.up.fe.dceg.neptus.plugins.vtk.Vtk;
@@ -50,8 +52,14 @@ import pt.up.fe.dceg.neptus.util.ImageUtils;
  * @author hfq
  * 
  */
-public class MultibeamMenuBar {
+public class MultibeamMenuBar extends JPanel {
+
+    private static final long serialVersionUID = 5376238692133036828L;
+
     private Vtk vtkMultibeamInit;
+
+    private JLabel iconLabel;
+    private JLabel textLabel;
 
     private JMenuBar menuBar;
     private JMenu fileMenu, editMenu, viewMenu, toolsMenu, helpMenu;
@@ -71,13 +79,20 @@ public class MultibeamMenuBar {
     private AbstractAction help;
 
     public MultibeamMenuBar(Vtk vtkMultibeamInit) {
+        // super(new MigLayout());
+        // this.setLayout(new MigLayout("fill"));
         this.vtkMultibeamInit = vtkMultibeamInit;
+
+        // this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(),
+        // BorderFactory.createEmptyBorder(0, 0, 0, 0)));
     }
 
-    public JMenuBar createMultibeamMenuBar() {
+    public JPanel createMultibeamMenuBar() {
         setMenuBar(new JMenuBar());
+        getMenuBar().setLayout(new MigLayout());
 
         fileMenu = new JMenu(I18n.text("File"));
+        // fileMenu.setBounds(fileMenu.getX(), fileMenu.getY(), this.getWidth(), this.getHeight());
         addMenuItemsToFileMenu();
         editMenu = new JMenu(I18n.text("Edit"));
         addMenuItemsToEditMenu();
@@ -88,22 +103,29 @@ public class MultibeamMenuBar {
         helpMenu = new JMenu(I18n.text("Help"));
         addMenuItemsToHelpMenu();
 
-        getMenuBar().setBackground(Color.GRAY);
+        // getMenuBar().setBackground(Color.GRAY);
         getMenuBar().add(fileMenu);
         getMenuBar().add(editMenu);
         getMenuBar().add(viewMenu);
         getMenuBar().add(toolsMenu);
         getMenuBar().add(helpMenu);
 
-        return getMenuBar();
+        getMenuBar().setOpaque(false);
+        getMenuBar().setBounds(0, 0, this.getWidth(), this.getHeight());
+
+        this.add(getMenuBar());
+
+        return this;
     }
 
     private void addMenuItemsToFileMenu() {
         // FIXME - does it really have to have this "save"?
         saveFile = new SaveMultibeamVisAction(vtkMultibeamInit);
-        saveFileAsPointCloud = new SaveAsPointcloudMultibeamVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent(), vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly());
-        //if(vtkMultibeamInit.linkedHashMapMesh.get("multibeam") != null)
-            saveFileAsMesh = new SaveAsMeshMultibeamVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent(), vtkMultibeamInit.linkedHashMapMesh.get("multibeam").getPolyData());
+        saveFileAsPointCloud = new SaveAsPointcloudMultibeamVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent(),
+                vtkMultibeamInit.linkedHashMapCloud.get("multibeam").getPoly());
+        // if(vtkMultibeamInit.linkedHashMapMesh.get("multibeam") != null)
+        saveFileAsMesh = new SaveAsMeshMultibeamVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent(),
+                vtkMultibeamInit.linkedHashMapMesh.get("multibeam").getPolyData());
         fileMenu.add(saveFile);
         fileMenu.add(saveFileAsPointCloud);
         fileMenu.add(saveFileAsMesh);
@@ -119,7 +141,7 @@ public class MultibeamMenuBar {
                 PropertiesEditor.editProperties(vtkMultibeamInit, true);
             }
         };
-        
+
         editMenu.add(configs);
     }
 
