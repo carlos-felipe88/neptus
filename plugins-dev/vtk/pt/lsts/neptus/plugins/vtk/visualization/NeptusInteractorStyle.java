@@ -128,18 +128,18 @@ public class NeptusInteractorStyle extends vtkInteractorStyleTrackballCamera {
     // ########## Mouse Interaction ##########
     MouseEvent mouseEvent;
 
-    vtkProp3D InteractionProp;
-    vtkCellPicker InteractionPicker;
+    // vtkProp3D InteractionProp;
+    // vtkCellPicker InteractionPicker;
 
     // Current Window position width/height
-    int winHeight, winWidth;
+    // int winHeight, winWidth;
     // Current window postion x/y
-    int winPosX, winPosY;
+    // int winPosX, winPosY;
 
     // TrackballActor style interactor for addObserver callback reference
-    vtkInteractorStyleTrackballActor astyle = new vtkInteractorStyleTrackballActor();
+    // vtkInteractorStyleTrackballActor astyle = new vtkInteractorStyleTrackballActor();
     // TrackballCamera style interactor for addObserver callback reference
-    vtkInteractorStyleTrackballCamera cstyle = new vtkInteractorStyleTrackballCamera();
+    // vtkInteractorStyleTrackballCamera cstyle = new vtkInteractorStyleTrackballCamera();
 
     // ########### Point Picking ##########
     PointPickingEvent pointPickEvent;
@@ -187,8 +187,8 @@ public class NeptusInteractorStyle extends vtkInteractorStyleTrackballCamera {
         // interactModifier = InteractorKeyboardModifier.INTERACTOR_KB_MOD_ALT;
 
         // Set window size (width, height) to unknow (-1)
-        winHeight = winWidth = -1;
-        winPosX = winPosY = 0;
+        // winHeight = winWidth = -1;
+        // winPosX = winPosY = 0;
 
         // Grid is disabled by default
         gridEnabled = false;
@@ -254,20 +254,6 @@ public class NeptusInteractorStyle extends vtkInteractorStyleTrackballCamera {
      */
     void setInteractor(vtkRenderWindowInteractor interactor) {
         this.interactor = interactor;
-    }
-
-    /**
-     * @return the style
-     */
-    vtkInteractorStyleTrackballCamera getStyle() {
-        return style;
-    }
-
-    /**
-     * @param style the style to set
-     */
-    void setStyle(vtkInteractorStyleTrackballCamera style) {
-        this.style = style;
     }
 
     /**
