@@ -58,7 +58,7 @@ import pt.up.fe.dceg.neptus.util.ImageUtils;
  * @author hfq
  * 
  */
-public class MultibeamMenuBar extends JPanel {
+public class MenuBar extends JPanel {
 
     private static final long serialVersionUID = 5376238692133036828L;
 
@@ -83,7 +83,7 @@ public class MultibeamMenuBar extends JPanel {
     // HelpMenu
     private AbstractAction help;
 
-    public MultibeamMenuBar(Vtk vtkMultibeamInit) {
+    public MenuBar(Vtk vtkMultibeamInit) {
         // super(new MigLayout());
         // this.setLayout(new MigLayout("fill"));
         this.vtkMultibeamInit = vtkMultibeamInit;
@@ -143,6 +143,7 @@ public class MultibeamMenuBar extends JPanel {
         saveFileAsMesh = new SaveAsMeshMultibeamVisAction(vtkMultibeamInit, vtkMultibeamInit.getParent(),
                 vtkMultibeamInit.linkedHashMapMesh.get("multibeam").getPolyData());
         fileMenu.add(saveFile);
+        fileMenu.addSeparator();
         fileMenu.add(saveFileAsPointCloud);
         fileMenu.add(saveFileAsMesh);
     }

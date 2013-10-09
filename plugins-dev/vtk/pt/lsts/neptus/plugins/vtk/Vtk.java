@@ -164,7 +164,7 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
             PointCloudMesh mesh = new PointCloudMesh();
             linkedHashMapMesh.put(linkedHashMapCloud.get("multibeam").getCloudName(), mesh);
 
-            winCanvas = new WindowImpl(canvas, linkedHashMapCloud);
+            winCanvas = new WindowImpl(canvas, "Multibeam Viewport", linkedHashMapCloud);
 
             canvas.GetRenderer().ResetCamera();
             canvas.LightFollowCameraOn();
@@ -191,7 +191,6 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
             // for resizing porpuses
             canvas.getParent().addComponentListener(this);
 
-            // vtkCanvas.setEnabled(true);
             canvas.setEnabled(true);
 
             // add axesWidget to vtk canvas fixed to a screen position
@@ -199,9 +198,6 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
             axesWidget.createAxesWidget();
 
             if (pointCloud.getNumberOfPoints() != 0) { // checks wether there are any points to render!
-
-                // canvas.lock();
-
                 if (NeptusMRA.outliersRemoval) {
                     // remove outliers
                     // RadiusOutlierRemoval radOutRem = new RadiusOutlierRemoval();
@@ -234,7 +230,6 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
                 }
 
                 Utils.delete(multibeamToPointCloud.getPoints());
-                // canvas.unlock();
 
                 // add parsed beams stored on pointcloud to canvas
                 canvas.GetRenderer().AddActor(pointCloud.getCloudLODActor());
@@ -246,8 +241,6 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
                 double[] center = new double[3];
                 center = PointCloudUtils.computeCenter(pointCloud);
 
-                // canvas.GetRenderer().GetActiveCamera().SetPosition(pointCloud.getPoly().GetCenter()[0]
-                // ,pointCloud.getPoly().GetCenter()[1] , pointCloud.getPoly().GetCenter()[2] - 200);
                 canvas.GetRenderer().GetActiveCamera().SetPosition(center[0], center[1], center[2] - 200);
                 canvas.GetRenderer().GetActiveCamera().SetViewUp(0.0, 0.0, -1.0);
 
@@ -406,7 +399,7 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
 
         Rectangle canvasBounds = new Rectangle();
         canvasBounds.setBounds(canvas.getX(), canvas.getY(), canvas.getParent().getWidth(), canvas.getParent()
-                .getHeight() - 26);
+                .getHeight() - 25);
         canvas.setBounds(canvasBounds);
     }
 
