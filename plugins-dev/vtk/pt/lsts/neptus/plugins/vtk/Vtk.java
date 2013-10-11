@@ -112,15 +112,14 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
     // there are 2 types of rendering objects on VTK - vtkPanel and vtkCanvas. vtkCanvas seems to have a better
     // behaviour and performance.
     public Canvas canvas;
+    private MenuBar menuBar;
+    private ToolBar toolbar;
 
     public WindowImpl winCanvas;
 
     public vtkLODActor noBeamsTxtActor;
 
     public Text3D noBeamsText;
-
-    // private MultibeamToolbar toolbar;
-    private MultibeamMenuBar menuBar;
 
     private static final String FILE_83P_EXT = ".83P";
 
@@ -178,6 +177,10 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
             // add menu bar to layout
             menuBar = new MenuBar(this);
             add(menuBar.createMultibeamMenuBar(), "dock north");
+            // add toolbar to layout
+            toolbar = new ToolBar(this);
+            toolbar.createToolbar();
+            add(toolbar.getToolbar(), "dock west");          
 
             // parse 83P data storing it on a pointcloud
             multibeamToPointCloud = new MultibeamToPointCloud(getLog(), pointCloud);

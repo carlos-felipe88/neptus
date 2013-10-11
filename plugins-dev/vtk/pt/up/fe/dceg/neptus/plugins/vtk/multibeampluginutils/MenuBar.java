@@ -40,9 +40,6 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -52,6 +49,7 @@ import net.miginfocom.swing.MigLayout;
 import pt.up.fe.dceg.neptus.gui.PropertiesEditor;
 import pt.up.fe.dceg.neptus.i18n.I18n;
 import pt.up.fe.dceg.neptus.plugins.vtk.Vtk;
+import pt.up.fe.dceg.neptus.util.GuiUtils;
 import pt.up.fe.dceg.neptus.util.ImageUtils;
 
 /**
@@ -66,8 +64,16 @@ public class MenuBar extends JPanel {
    
     // ImageUtils.getIcon("images/buttons/model3d.png")
 
-    private JMenuBar menuBar;
-    private JMenu fileMenu, editMenu, viewMenu, toolsMenu, helpMenu;
+    private static JMenuBar menuBar;
+    private static JMenu fileMenu;
+
+    private static JMenu editMenu;
+
+    private static JMenu viewMenu;
+
+    private static JMenu toolsMenu;
+
+    private static JMenu helpMenu;
 
     // fileMenu
     private AbstractAction saveFile, saveFileAsPointCloud, saveFileAsMesh;
@@ -82,14 +88,15 @@ public class MenuBar extends JPanel {
     private AbstractAction exaggerateZ, performMeshing, performSmoothing;
     // HelpMenu
     private AbstractAction help;
+    
+    public MenuBar() {
+    }
 
+    /**
+     * @param vtkMultibeamInit
+     */
     public MenuBar(Vtk vtkMultibeamInit) {
-        // super(new MigLayout());
-        // this.setLayout(new MigLayout("fill"));
         this.vtkMultibeamInit = vtkMultibeamInit;
-
-        // this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(),
-        // BorderFactory.createEmptyBorder(0, 0, 0, 0)));
     }
     
     @Override
@@ -98,13 +105,30 @@ public class MenuBar extends JPanel {
         Graphics2D graphic2d = (Graphics2D) g;
         Color color1 = getBackground();
         Color color2 = Color.GRAY;
-        GradientPaint gradPaint = new GradientPaint(0, 0, color2, getWidth(), getHeight(), color1);
+        GradientPaint gradPaint = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
         graphic2d.setPaint(gradPaint);
         graphic2d.fillRect(0, 0, getWidth(), getHeight());
     }
 
+    /**
+     * Create and set the multibeam vtk menubar component
+     * @return
+     */
     public JPanel createMultibeamMenuBar() {
-        setMenuBar(new JMenuBar());
+        setMenuBar(new JMenuBar(){
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D graphic2d = (Graphics2D) g;
+                Color color1 = getBackground();
+                Color color2 = Color.GRAY;
+                GradientPaint gradPaint = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
+                graphic2d.setPaint(gradPaint);
+                graphic2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        });
         getMenuBar().setLayout(new MigLayout());
         
         fileMenu = new JMenu(I18n.text("File"));
@@ -134,6 +158,9 @@ public class MenuBar extends JPanel {
         return this;
     }
 
+    /**
+     * Set up and add entries to File JMenu.
+     */
     private void addMenuItemsToFileMenu() {
         // FIXME - does it really have to have this "save"?
         saveFile = new SaveVisAction(vtkMultibeamInit);
@@ -148,6 +175,9 @@ public class MenuBar extends JPanel {
         fileMenu.add(saveFileAsMesh);
     }
 
+    /**
+     * Set up and add entries to Edit JMenu.
+     */
     private void addMenuItemsToEditMenu() {
         configs = new VisualizationAction(I18n.text("Configurations"),
                 ImageUtils.createImageIcon("images/menus/configure.png"), KeyStroke.getKeyStroke(KeyEvent.VK_E,
@@ -162,6 +192,9 @@ public class MenuBar extends JPanel {
         editMenu.add(configs);
     }
 
+    /**
+     * Set up and add entries to View JMenu
+     */
     private void addMenuItemsToViewMenu() {
         resetViewportCamera = new VisualizationAction(I18n.text("Reset Viewport"),
                 ImageUtils.createImageIcon("/images/menus/camera.png")) {
@@ -185,15 +218,24 @@ public class MenuBar extends JPanel {
         viewMenu.add(resetViewportCamera);
     }
 
+    /**
+     * Set up and add entries to Tools JMenu
+     */
     private void addMenuItemsToToolsMenu() {
 
     }
 
+    /**
+     * Set up and add entries to Help JMenu
+     */
     private void addMenuItemsToHelpMenu() {
         help = new HelpVisAction(vtkMultibeamInit);
         helpMenu.add(help);
     }
 
+    /**
+     * @return the menubar component
+     */
     public JMenuBar getMenuBar() {
         return menuBar;
     }
@@ -203,6 +245,27 @@ public class MenuBar extends JPanel {
      */
     private void setMenuBar(JMenuBar menuBar) {
         this.menuBar = menuBar;
+    }
+    
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        MenuBar classMenuBar = new MenuBar();
+        menuBar = new JMenuBar();
+        fileMenu = new JMenu(I18n.text("File"));
+        editMenu = new JMenu(I18n.text("Edit"));
+        viewMenu = new JMenu(I18n.text("View"));
+        toolsMenu = new JMenu(I18n.text("Tools"));
+        helpMenu = new JMenu(I18n.text("Help"));
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+        menuBar.add(viewMenu);
+        menuBar.add(toolsMenu);
+        menuBar.add(helpMenu);
+        
+        classMenuBar.add(menuBar);
+        GuiUtils.testFrame(classMenuBar, "Test Multibeam: " + classMenuBar.getClass().getSimpleName());  
     }
 
 }
