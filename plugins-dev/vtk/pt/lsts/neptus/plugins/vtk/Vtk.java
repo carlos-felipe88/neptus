@@ -176,7 +176,7 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
             // add(panel, "W 100%, H 100%, dock south");
 
             // add menu bar to layout
-            menuBar = new MultibeamMenuBar(this);
+            menuBar = new MenuBar(this);
             add(menuBar.createMultibeamMenuBar(), "dock north");
 
             // parse 83P data storing it on a pointcloud

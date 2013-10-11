@@ -31,18 +31,14 @@
  */
 package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.ComponentOrientation;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
@@ -58,7 +54,7 @@ import pt.up.fe.dceg.neptus.util.ImageUtils;
 public class ToolBar extends JPanel {
     private static final long serialVersionUID = -7233932650068469685L;
 
-    private static final short ICON_SIZE = 30;
+    private static final short ICON_SIZE = 20;
 
     private static final ImageIcon ICON_POINTS = ImageUtils.getScaledIcon(
             ImageUtils.getImage("pt/up/fe/dceg/neptus/plugins/vtk/assets/points.png"), ICON_SIZE, ICON_SIZE);
@@ -69,16 +65,20 @@ public class ToolBar extends JPanel {
     private static final ImageIcon ICON_SOLID = ImageUtils.getScaledIcon(
             ImageUtils.getImage("pt/up/fe/dceg/neptus/plugins/vtk/assets/textures.png"), ICON_SIZE, ICON_SIZE);
 
+    private static final ImageIcon ICON_Z = ImageUtils.getScaledIcon(
+            ImageUtils.getImage("pt/up/fe/dceg/neptus/plugins/vtk/assets/zexag.png"), ICON_SIZE, ICON_SIZE);
+    
+    
     private Vtk vtkMultibeamInit;
 
-    // private JPanel panel;
-    private JToolBar toolbar;
+    private JPanel panel;
+    private static JToolBar toolbar;
 
-    private JToggleButton rawPointsToggle; // works with pointcloud
-    private JToggleButton wireframeToggle; // works with mesh
-    private JToggleButton solidToggle; // works with mesh
+    private JToggleButton rawPointsToggle;          // works with pointcloud
+    private JToggleButton wireframeToggle;          // works with mesh
+    private JToggleButton solidToggle;              // works with mesh
 
-    private JToggleButton zExaggerationToggle;
+    private JToggleButton zExaggerationToggle;      
     private JToggleButton countoursToggle;
 
     private JToggleButton meshingToggle;
@@ -86,93 +86,78 @@ public class ToolBar extends JPanel {
 
     private JToggleButton downsamplePointToggle;
 
-    public void Toolbar() {
+    public ToolBar() {
 
     }
 
-    public void Toolbar(Vtk vtkMultibeamInit) {
-        // super(new MigLayout());
+    public ToolBar(Vtk vtkMultibeamInit) {
         this.vtkMultibeamInit = vtkMultibeamInit;
-        // setPanel(new JPanel());
+        //this.setOpaque(false); 
     }
 
     public void createToolbar() {
         
-        this.setOpaque(false);
-        
-        setToolbar(new JToolBar(JToolBar.VERTICAL));
-        
-        // getToolbar().setComponentOrientation(JToolBar.VERTICAL);
+     
+        setToolbar(new JToolBar(JToolBar.VERTICAL)
+        {
+            private static final long serialVersionUID = 1L;
 
-//        this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredSoftBevelBorder(),
-//                BorderFactory.createEmptyBorder()));
-//        
+            @Override
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D graphic2d = (Graphics2D) g;
+                Color color1 = getBackground();
+                Color color2 = Color.GRAY;
+                GradientPaint gradPaint = new GradientPaint(0, 0, color2, getWidth(), getHeight(), color1);
+                graphic2d.setPaint(gradPaint);
+                graphic2d.fillRect(0, 0, getWidth(), getHeight());
+            } 
+        });
+    
         getToolbar().setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(),
                 BorderFactory.createEmptyBorder()));
-        getToolbar().setOpaque(false);
+        //getToolbar().setOpaque(false);
 
         rawPointsToggle = new JToggleButton();
-        rawPointsToggle.setOpaque(false);
+        //rawPointsToggle.setOpaque(false);
         rawPointsToggle.setHorizontalAlignment(JToggleButton.CENTER);
-        // rawPointsToggle.setBorder(BorderFactory.createCompoundBorder(Bor, insideBorder))
         rawPointsToggle.setToolTipText(I18n.text("Points based representation."));
         rawPointsToggle.setIcon(ICON_POINTS);
 
         wireframeToggle = new JToggleButton();
-        wireframeToggle.setOpaque(false);
+        //wireframeToggle.setOpaque(false);
         wireframeToggle.setHorizontalAlignment(JToggleButton.CENTER);
         wireframeToggle.setToolTipText(I18n.text("Wireframe based representation."));
         wireframeToggle.setIcon(ICON_WIREFRAME);
         
         solidToggle = new JToggleButton();
-        solidToggle.setOpaque(false);
+        //solidToggle.setOpaque(false);
         solidToggle.setHorizontalAlignment(JToggleButton.CENTER);
         solidToggle.setToolTipText(I18n.text("Solid based representation."));
         solidToggle.setIcon(ICON_SOLID);
         
         zExaggerationToggle = new JToggleButton();
-        zExaggerationToggle.setOpaque(false);
+        //zExaggerationToggle.setOpaque(false);
         zExaggerationToggle.setHorizontalAlignment(JToggleButton.CENTER);
         zExaggerationToggle.setToolTipText(I18n.text("Exaggerate Z."));
+        zExaggerationToggle.setIcon(ICON_Z);
 
+        getToolbar().addSeparator();
         getToolbar().add(rawPointsToggle);
         getToolbar().add(wireframeToggle);
-        getToolbar().add(new JSeparator(JSeparator.HORIZONTAL), BorderLayout.CENTER);      
         getToolbar().add(solidToggle);
         
-        this.add(getToolbar());
+        getToolbar().addSeparator();
+        getToolbar().add(zExaggerationToggle);
         
+        
+        this.add(getToolbar());       
     }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D graphic2d = (Graphics2D) g;
-        Color color1 = getBackground();
-        Color color2 = Color.GRAY;
-        GradientPaint gradPaint = new GradientPaint(0, 0, color2, getWidth(), getHeight(), color1);
-        graphic2d.setPaint(gradPaint);
-        graphic2d.fillRect(0, 0, getWidth(), getHeight());
-    }
-    
-//    /**
-//     * @return the panel
-//     */
-//    public JPanel getPanel() {
-//        return panel;
-//    }
-//
-//    /**
-//     * @param panel the panel to set
-//     */
-//    public void setPanel(JPanel panel) {
-//        this.panel = panel;
-//    }
 
     /**
      * @return the toolbar
      */
-    private JToolBar getToolbar() {
+    public JToolBar getToolbar() {
         return toolbar;
     }
 
@@ -187,9 +172,10 @@ public class ToolBar extends JPanel {
      * @param args
      */
     public static void main(String[] args) {
-        ToolBar toolbar = new ToolBar();
-        toolbar.createToolbar();
-        GuiUtils.testFrame(toolbar, "Test Multibeam: " + toolbar.getClass().getSimpleName(), ICON_SIZE + 25, ICON_SIZE * 3 + 500);
+        ToolBar classToolbar = new ToolBar();
+        classToolbar.createToolbar();
+        classToolbar.add(toolbar); 
+        GuiUtils.testFrame(classToolbar, "Test Multibeam: " + classToolbar.getClass().getSimpleName(), ICON_SIZE + 25, ICON_SIZE * 3 + 500);
 
         // GuiUtils.testFrame(lcp, "Test" + lcp.getClass().getSimpleName(), LedsUtils.PANEL_WIDTH,
         // LedsUtils.PANEL_HEIGHT);
