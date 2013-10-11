@@ -73,6 +73,9 @@ public class ToolBar extends JPanel {
 
     private static final ImageIcon ICON_MESHING = ImageUtils.getScaledIcon(
             ImageUtils.getImage("pt/up/fe/dceg/neptus/plugins/vtk/assets/meshing.png"), ICON_SIZE, ICON_SIZE);
+    
+    private static final ImageIcon ICON_SMOOTHING = ImageUtils.getScaledIcon(
+            ImageUtils.getImage("pt/up/fe/dceg/neptus/plugins/vtk/assets/smoothing.png"), ICON_SIZE, ICON_SIZE);
 
     private Vtk vtkMultibeamInit;
 
@@ -99,72 +102,87 @@ public class ToolBar extends JPanel {
     }
 
     public void createToolbar() {
-        setToolbar(new JToolBar(JToolBar.VERTICAL) {
-            private static final long serialVersionUID = 1L;
+        try {
+            setToolbar(new JToolBar(JToolBar.VERTICAL) {
+                private static final long serialVersionUID = 1L;
 
-            @Override
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D graphic2d = (Graphics2D) g;
-                Color color1 = getBackground();
-                Color color2 = Color.GRAY;
-                GradientPaint gradPaint = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
-                graphic2d.setPaint(gradPaint);
-                graphic2d.fillRect(0, 0, getWidth(), getHeight());
-            }
-        });
+                @Override
+                public void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    Graphics2D graphic2d = (Graphics2D) g;
+                    Color color1 = getBackground();
+                    Color color2 = Color.GRAY;
+                    GradientPaint gradPaint = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
+                    graphic2d.setPaint(gradPaint);
+                    graphic2d.fillRect(0, 0, getWidth(), getHeight());
+                }
+            });
 
-        getToolbar().setBorder(
-                BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(),
-                        BorderFactory.createEmptyBorder()));
-        // getToolbar().setOpaque(false);
+            getToolbar().setBorder(
+                    BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(),
+                            BorderFactory.createEmptyBorder()));
+            // getToolbar().setOpaque(false);
 
-        rawPointsToggle = new JToggleButton();
-        // rawPointsToggle.setOpaque(false);
-        rawPointsToggle.setHorizontalAlignment(JToggleButton.CENTER);
-        rawPointsToggle.setToolTipText(I18n.text("Points based representation."));
-        rawPointsToggle.setIcon(ICON_POINTS);
+            rawPointsToggle = new JToggleButton();
+            // rawPointsToggle.setOpaque(false);
+            rawPointsToggle.setHorizontalAlignment(JToggleButton.CENTER);
+            rawPointsToggle.setToolTipText(I18n.text("Points based representation."));
+            rawPointsToggle.setIcon(ICON_POINTS);
 
-        wireframeToggle = new JToggleButton();
-        // wireframeToggle.setOpaque(false);
-        wireframeToggle.setHorizontalAlignment(JToggleButton.CENTER);
-        wireframeToggle.setToolTipText(I18n.text("Wireframe based representation."));
-        wireframeToggle.setIcon(ICON_WIREFRAME);
+            wireframeToggle = new JToggleButton();
+            // wireframeToggle.setOpaque(false);
+            wireframeToggle.setHorizontalAlignment(JToggleButton.CENTER);
+            wireframeToggle.setToolTipText(I18n.text("Wireframe based representation."));
+            wireframeToggle.setIcon(ICON_WIREFRAME);
 
-        solidToggle = new JToggleButton();
-        // solidToggle.setOpaque(false);
-        solidToggle.setHorizontalAlignment(JToggleButton.CENTER);
-        solidToggle.setToolTipText(I18n.text("Solid based representation."));
-        solidToggle.setIcon(ICON_SOLID);
+            solidToggle = new JToggleButton();
+            // solidToggle.setOpaque(false);
+            solidToggle.setHorizontalAlignment(JToggleButton.CENTER);
+            solidToggle.setToolTipText(I18n.text("Solid based representation."));
+            solidToggle.setIcon(ICON_SOLID);
 
-        zExaggerationToggle = new JToggleButton();
-        // zExaggerationToggle.setOpaque(false);
-        zExaggerationToggle.setHorizontalAlignment(JToggleButton.CENTER);
-        zExaggerationToggle.setToolTipText(I18n.text("Exaggerate Z."));
-        zExaggerationToggle.setIcon(ICON_Z);
+            zExaggerationToggle = new JToggleButton();
+            // zExaggerationToggle.setOpaque(false);
+            zExaggerationToggle.setHorizontalAlignment(JToggleButton.CENTER);
+            zExaggerationToggle.setToolTipText(I18n.text("Exaggerate Z."));
+            zExaggerationToggle.setIcon(ICON_Z);
 
-        contoursToggle = new JToggleButton();
-        contoursToggle.setHorizontalAlignment(JToggleButton.CENTER);
-        contoursToggle.setToolTipText(I18n.text("Enable/Disable contouts."));
-        contoursToggle.setIcon(ICON_CONTOURS);
-        
-        meshingToggle = new JToggleButton();
-        meshingToggle.setHorizontalAlignment(JToggleButton.CENTER);
-        meshingToggle.setToolTipText(I18n.text("Perform meshing on pointcloud"));
-        meshingToggle.setIcon(ICON_MESHING);
+            contoursToggle = new JToggleButton();
+            contoursToggle.setHorizontalAlignment(JToggleButton.CENTER);
+            contoursToggle.setToolTipText(I18n.text("Enable/Disable contouts."));
+            contoursToggle.setIcon(ICON_CONTOURS);
+            
+            meshingToggle = new JToggleButton();
+            meshingToggle.setHorizontalAlignment(JToggleButton.CENTER);
+            meshingToggle.setToolTipText(I18n.text("Perform meshing on pointcloud"));
+            meshingToggle.setIcon(ICON_MESHING);
+            
+            smoothingMeshToggle = new JToggleButton();
+            //smoothingMeshToggle.setHorizontalAlignment(JToggleButton.CENTER);
+            smoothingMeshToggle.setToolTipText(I18n.text("Perform mesh smoothing."));
+            smoothingMeshToggle.setIcon(ICON_SMOOTHING);
 
-        getToolbar().addSeparator();
+            getToolbar().addSeparator();
 
-        getToolbar().add(rawPointsToggle);
-        getToolbar().add(wireframeToggle);
-        getToolbar().add(solidToggle);
+            getToolbar().add(rawPointsToggle);
+            getToolbar().add(wireframeToggle);
+            getToolbar().add(solidToggle);
 
-        getToolbar().addSeparator();
+            getToolbar().addSeparator();
 
-        getToolbar().add(zExaggerationToggle);
-        getToolbar().add(contoursToggle);
+            getToolbar().add(zExaggerationToggle);
+            getToolbar().add(contoursToggle);
+            
+            getToolbar().addSeparator();
+            
+            getToolbar().add(meshingToggle);
+            getToolbar().add(smoothingMeshToggle);
 
-        this.add(getToolbar());
+            this.add(getToolbar());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

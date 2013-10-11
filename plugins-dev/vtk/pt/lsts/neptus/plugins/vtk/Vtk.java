@@ -246,8 +246,6 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
 
                 canvas.GetRenderer().GetActiveCamera().SetPosition(center[0], center[1], center[2] - 200);
                 canvas.GetRenderer().GetActiveCamera().SetViewUp(0.0, 0.0, -1.0);
-
-                // canvas.Report();
             }
             else { // if no beams were parsed
                 String msgErrorMultibeam;
@@ -386,19 +384,17 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
      * @see java.awt.event.ComponentListener#componentResized(java.awt.event.ComponentEvent)
      */
     @Override
-    public void componentResized(ComponentEvent e) {
+    public void componentResized(ComponentEvent e) {        
+        Rectangle menuBarBounds = menuBar.getMenuBar().getBounds();
+        
         Rectangle newMenuBarBounds = new Rectangle();
-        // newMenuBarBounds.setBounds(0, 0, menuBarBounds.width, 25);
-        newMenuBarBounds.setBounds(0, -5, canvas.getParent().getWidth(), canvas.getHeight());
+        newMenuBarBounds.setBounds(0, -5, canvas.getParent().getWidth(), menuBarBounds.height);
         menuBar.getMenuBar().setBounds(newMenuBarBounds);
-        
-        
+                
         Rectangle parentparentBounds = new Rectangle();
         parentparentBounds.setBounds(0, 0, canvas.getParent().getParent().getWidth(), canvas.getParent()
                 .getParent().getHeight() - 12);
         canvas.getParent().setBounds(parentparentBounds);
-        //
-
 
         Rectangle canvasBounds = new Rectangle();
         canvasBounds.setBounds(canvas.getX(), canvas.getY(), canvas.getParent().getWidth(), canvas.getParent()

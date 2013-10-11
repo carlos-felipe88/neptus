@@ -244,7 +244,7 @@ public class MenuBar extends JPanel {
      * @param menuBar the menuBar to set
      */
     private void setMenuBar(JMenuBar menuBar) {
-        this.menuBar = menuBar;
+        MenuBar.menuBar = menuBar;
     }
     
     /**
@@ -252,7 +252,20 @@ public class MenuBar extends JPanel {
      */
     public static void main(String[] args) {
         MenuBar classMenuBar = new MenuBar();
-        menuBar = new JMenuBar();
+        menuBar = new JMenuBar() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D graphic2d = (Graphics2D) g;
+                Color color1 = getBackground();
+                Color color2 = Color.GRAY;
+                GradientPaint gradPaint = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
+                graphic2d.setPaint(gradPaint);
+                graphic2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
         fileMenu = new JMenu(I18n.text("File"));
         editMenu = new JMenu(I18n.text("Edit"));
         viewMenu = new JMenu(I18n.text("View"));
