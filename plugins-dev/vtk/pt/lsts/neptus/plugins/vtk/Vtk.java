@@ -400,6 +400,10 @@ public class Vtk extends JPanel implements MRAVisualization, PropertiesProvider,
         canvasBounds.setBounds(canvas.getX(), canvas.getY(), canvas.getParent().getWidth(), canvas.getParent()
                 .getHeight() - 25);
         canvas.setBounds(canvasBounds);
+        
+        canvas.lock();
+        canvas.RenderSecured();
+        canvas.unlock();
     }
 
     /*
