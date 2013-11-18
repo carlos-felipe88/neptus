@@ -29,12 +29,12 @@
  * Author: hfq
  * Oct 8, 2013
  */
-package pt.up.fe.dceg.neptus.plugins.vtk.visualization;
+package pt.lsts.neptus.plugins.vtk.visualization;
 
 import java.util.LinkedHashMap;
 
-import pt.up.fe.dceg.neptus.plugins.vtk.pointcloud.PointCloud;
-import pt.up.fe.dceg.neptus.plugins.vtk.pointtypes.PointXYZ;
+import pt.lsts.neptus.plugins.vtk.pointcloud.PointCloud;
+import pt.lsts.neptus.plugins.vtk.pointtypes.PointXYZ;
 import vtk.vtkInteractorStyleTrackballCamera;
 import vtk.vtkLegendScaleActor;
 import vtk.vtkPNGWriter;

@@ -55,7 +55,9 @@ import pt.lsts.neptus.plugins.NeptusProperty;
 import pt.lsts.neptus.plugins.PluginDescription;
 import pt.lsts.neptus.plugins.PluginUtils;
 import pt.lsts.neptus.plugins.vtk.filters.StatisticalOutlierRemoval;
-import pt.lsts.neptus.plugins.vtk.multibeampluginutils.MultibeamToolbar;
+import pt.lsts.neptus.plugins.vtk.multibeampluginutils.MenuBar;
+import pt.lsts.neptus.plugins.vtk.multibeampluginutils.ToolBar;
+import pt.lsts.neptus.plugins.vtk.multibeampluginutils.WindowImpl;
 import pt.lsts.neptus.plugins.vtk.pointcloud.MultibeamToPointCloud;
 import pt.lsts.neptus.plugins.vtk.pointcloud.PointCloud;
 import pt.lsts.neptus.plugins.vtk.pointtypes.PointXYZ;
@@ -65,7 +67,6 @@ import pt.lsts.neptus.plugins.vtk.utils.Utils;
 import pt.lsts.neptus.plugins.vtk.visualization.AxesWidget;
 import pt.lsts.neptus.plugins.vtk.visualization.Canvas;
 import pt.lsts.neptus.plugins.vtk.visualization.Text3D;
-import pt.lsts.neptus.plugins.vtk.visualization.Window;
 import pt.lsts.neptus.util.ImageUtils;
 import vtk.vtkLODActor;
 

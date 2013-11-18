@@ -29,7 +29,7 @@
  * Author: hfq
  * Oct 9, 2013
  */
-package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
+package pt.lsts.neptus.plugins.vtk.multibeampluginutils;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -42,10 +42,10 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
-import pt.up.fe.dceg.neptus.i18n.I18n;
-import pt.up.fe.dceg.neptus.plugins.vtk.Vtk;
-import pt.up.fe.dceg.neptus.util.GuiUtils;
-import pt.up.fe.dceg.neptus.util.ImageUtils;
+import pt.lsts.neptus.i18n.I18n;
+import pt.lsts.neptus.plugins.vtk.Vtk;
+import pt.lsts.neptus.util.GuiUtils;
+import pt.lsts.neptus.util.ImageUtils;
 
 /**
  * @author hfq
@@ -57,25 +57,25 @@ public class ToolBar extends JPanel {
     private static final short ICON_SIZE = 20;
 
     private static final ImageIcon ICON_POINTS = ImageUtils.getScaledIcon(
-            ImageUtils.getImage("pt/up/fe/dceg/neptus/plugins/vtk/assets/points.png"), ICON_SIZE, ICON_SIZE);
+            ImageUtils.getImage("pt/lsts/neptus/plugins/vtk/assets/points.png"), ICON_SIZE, ICON_SIZE);
 
     private static final ImageIcon ICON_WIREFRAME = ImageUtils.getScaledIcon(
-            ImageUtils.getImage("pt/up/fe/dceg/neptus/plugins/vtk/assets/wire.png"), ICON_SIZE, ICON_SIZE);
+            ImageUtils.getImage("pt/lsts/neptus/plugins/vtk/assets/wire.png"), ICON_SIZE, ICON_SIZE);
 
     private static final ImageIcon ICON_SOLID = ImageUtils.getScaledIcon(
-            ImageUtils.getImage("pt/up/fe/dceg/neptus/plugins/vtk/assets/textures.png"), ICON_SIZE, ICON_SIZE);
+            ImageUtils.getImage("pt/lsts/neptus/plugins/vtk/assets/textures.png"), ICON_SIZE, ICON_SIZE);
 
     private static final ImageIcon ICON_Z = ImageUtils.getScaledIcon(
-            ImageUtils.getImage("pt/up/fe/dceg/neptus/plugins/vtk/assets/zexag.png"), ICON_SIZE, ICON_SIZE);
+            ImageUtils.getImage("pt/lsts/neptus/plugins/vtk/assets/zexag.png"), ICON_SIZE, ICON_SIZE);
 
     private static final ImageIcon ICON_CONTOURS = ImageUtils.getScaledIcon(
-            ImageUtils.getImage("pt/up/fe/dceg/neptus/plugins/vtk/assets/contours.png"), ICON_SIZE, ICON_SIZE);
+            ImageUtils.getImage("pt/lsts/neptus/plugins/vtk/assets/contours.png"), ICON_SIZE, ICON_SIZE);
 
     private static final ImageIcon ICON_MESHING = ImageUtils.getScaledIcon(
-            ImageUtils.getImage("pt/up/fe/dceg/neptus/plugins/vtk/assets/meshing.png"), ICON_SIZE, ICON_SIZE);
+            ImageUtils.getImage("pt/lsts/neptus/plugins/vtk/assets/meshing.png"), ICON_SIZE, ICON_SIZE);
     
     private static final ImageIcon ICON_SMOOTHING = ImageUtils.getScaledIcon(
-            ImageUtils.getImage("pt/up/fe/dceg/neptus/plugins/vtk/assets/smoothing.png"), ICON_SIZE, ICON_SIZE);
+            ImageUtils.getImage("pt/lsts/neptus/plugins/vtk/assets/smoothing.png"), ICON_SIZE, ICON_SIZE);
 
     private Vtk vtkMultibeamInit;
 

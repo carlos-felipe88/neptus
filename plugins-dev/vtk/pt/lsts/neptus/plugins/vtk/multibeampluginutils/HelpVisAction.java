@@ -29,7 +29,7 @@
  * Author: hfq
  * Aug 26, 2013
  */
-package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
+package pt.lsts.neptus.plugins.vtk.multibeampluginutils;
 
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
@@ -38,11 +38,11 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.KeyStroke;
 
-import pt.up.fe.dceg.neptus.i18n.I18n;
-import pt.up.fe.dceg.neptus.plugins.vtk.Vtk;
-import pt.up.fe.dceg.neptus.util.GuiUtils;
-import pt.up.fe.dceg.neptus.util.ImageUtils;
-import pt.up.fe.dceg.neptus.util.conf.ConfigFetch;
+import pt.lsts.neptus.i18n.I18n;
+import pt.lsts.neptus.plugins.vtk.Vtk;
+import pt.lsts.neptus.util.GuiUtils;
+import pt.lsts.neptus.util.ImageUtils;
+import pt.lsts.neptus.util.conf.ConfigFetch;
 
 /**
  * @author hfq

@@ -29,7 +29,7 @@
  * Author: hfq
  * Aug 27, 2013
  */
-package pt.up.fe.dceg.neptus.plugins.vtk.utils;
+package pt.lsts.neptus.plugins.vtk.utils;
 
 import java.io.File;
 

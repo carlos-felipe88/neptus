@@ -49,7 +49,7 @@ import vtk.vtkVRMLImporter;
  * @author hfq
  *
  */
-public class VtkReader {
+public class Reader3D {
     protected static Path path = null;
     
     // private static String filePath;
@@ -80,39 +80,31 @@ public class VtkReader {
     
     private ImporterOps impOp;
     
-    public VtkReader(File file) {
+    public Reader3D(File file) {
         
         checkFileExtention(file);
-        
-        
-        
         switch (impOp)
         {
             case VTK:
                 NeptusLog.pub().info("vtk data Set Reader chosen!");
                 readVTKFile();
                 break;
-            
             case OBJ:
                 NeptusLog.pub().info("obj reader chosen");
                 readOBJFile();
                 break;
-                
             case PLY:
                 NeptusLog.pub().info("ply reader chosen");
                 readPLYFile();
-                break;
-                
+                break;               
             case STL:
                 NeptusLog.pub().info("stl reader chosen");
                 readSTLFile();
                 break;
-                
             case XYZ:
                 NeptusLog.pub().info("xyz, simple points reader");
                 readXYZfile();
                 break;
-            
             default:
                 NeptusLog.pub().info("error file extention not found, not supposed to be here");
         }

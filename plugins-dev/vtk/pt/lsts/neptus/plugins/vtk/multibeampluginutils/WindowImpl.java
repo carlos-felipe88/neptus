@@ -29,16 +29,16 @@
  * Author: hfq
  * Apr 11, 2013
  */
-package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
+package pt.lsts.neptus.plugins.vtk.multibeampluginutils;
 
 import java.util.LinkedHashMap;
 
-import pt.up.fe.dceg.neptus.NeptusLog;
-import pt.up.fe.dceg.neptus.plugins.vtk.pointcloud.PointCloud;
-import pt.up.fe.dceg.neptus.plugins.vtk.pointtypes.PointXYZ;
-import pt.up.fe.dceg.neptus.plugins.vtk.visualization.Canvas;
-import pt.up.fe.dceg.neptus.plugins.vtk.visualization.IWindow;
-import pt.up.fe.dceg.neptus.plugins.vtk.visualization.NeptusInteractorStyle;
+import pt.lsts.neptus.NeptusLog;
+import pt.lsts.neptus.plugins.vtk.pointcloud.PointCloud;
+import pt.lsts.neptus.plugins.vtk.pointtypes.PointXYZ;
+import pt.lsts.neptus.plugins.vtk.visualization.Canvas;
+import pt.lsts.neptus.plugins.vtk.visualization.IWindow;
+import pt.lsts.neptus.plugins.vtk.visualization.NeptusInteractorStyle;
 import vtk.vtkPanel;
 import vtk.vtkRenderWindow;
 import vtk.vtkRenderWindowInteractor;

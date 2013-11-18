@@ -29,7 +29,7 @@
  * Author: hfq
  * Aug 14, 2013
  */
-package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
+package pt.lsts.neptus.plugins.vtk.multibeampluginutils;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -46,11 +46,11 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import net.miginfocom.swing.MigLayout;
-import pt.up.fe.dceg.neptus.gui.PropertiesEditor;
-import pt.up.fe.dceg.neptus.i18n.I18n;
-import pt.up.fe.dceg.neptus.plugins.vtk.Vtk;
-import pt.up.fe.dceg.neptus.util.GuiUtils;
-import pt.up.fe.dceg.neptus.util.ImageUtils;
+import pt.lsts.neptus.gui.PropertiesEditor;
+import pt.lsts.neptus.i18n.I18n;
+import pt.lsts.neptus.plugins.vtk.Vtk;
+import pt.lsts.neptus.util.GuiUtils;
+import pt.lsts.neptus.util.ImageUtils;
 
 /**
  * @author hfq

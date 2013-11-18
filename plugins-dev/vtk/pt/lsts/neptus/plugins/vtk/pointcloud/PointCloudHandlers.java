@@ -31,6 +31,7 @@
  */
 package pt.lsts.neptus.plugins.vtk.pointcloud;
 
+import pt.lsts.neptus.NeptusLog;
 import pt.lsts.neptus.plugins.vtk.pointtypes.PointXYZ;
 import vtk.vtkLookupTable;
 import vtk.vtkPolyData;

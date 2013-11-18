@@ -29,7 +29,7 @@
  * Author: hfq
  * Aug 26, 2013
  */
-package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
+package pt.lsts.neptus.plugins.vtk.multibeampluginutils;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;

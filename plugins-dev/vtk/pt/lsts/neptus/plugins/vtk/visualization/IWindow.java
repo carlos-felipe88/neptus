@@ -27,45 +27,47 @@
  * For more information please see <http://lsts.fe.up.pt/neptus>.
  *
  * Author: hfq
- * Aug 26, 2013
+ * 12 de Set de 2013
  */
-package pt.up.fe.dceg.neptus.plugins.vtk.multibeampluginutils;
+package pt.lsts.neptus.plugins.vtk.visualization;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-
-import javax.swing.ImageIcon;
-import javax.swing.KeyStroke;
-
-import pt.up.fe.dceg.neptus.i18n.I18n;
-import pt.up.fe.dceg.neptus.plugins.vtk.Vtk;
-import pt.up.fe.dceg.neptus.util.ImageUtils;
+import vtk.vtkRenderWindow;
+import vtk.vtkRenderer;
 
 /**
  * @author hfq
  * 
  */
-public class SaveVisAction extends VisualizationAction {
-    private static final long serialVersionUID = 1697337194946432718L;
+public interface IWindow {
     
-    protected Vtk vtkMultibeamInit;
-
-    public SaveVisAction(Vtk vtkMultibeamInit) {
-        super(I18n.text("Save File"), new ImageIcon(ImageUtils.getImage("images/menus/save.png")), I18n.text("Save File"),
-                KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK, true));
-        this.vtkMultibeamInit = vtkMultibeamInit;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+    /**
+     * Sets up the renderer
      */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        
-        
-    }
-
+    public void setUpRenderer();
+    
+    /**
+     * Sets up the render window
+     */
+    public void setUpRenWin();
+    
+    /**
+     * Sets up the rendender Window Interactors
+     */
+    public void setUpRenWinInteractor();
+    
+    /**
+     * Sets up the interactor style
+     */
+    public void setUpInteractorStyle();
+    
+    /**
+     * @return the vtk render window
+     */
+    public vtkRenderWindow getRenWin();
+    
+    /**
+     * @return the vtk renderer
+     */
+    public vtkRenderer getRenderer();
+    
 }
